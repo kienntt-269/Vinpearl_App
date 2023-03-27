@@ -5,14 +5,14 @@ import domain from '../domain'
 const homeApi = {
 
     // home
-    searchPost: (params) => axios.get(`${domain}/${domain}/post/search`, {params: params}),
+    searchPost: (params) => axios.get(`${domain}/post/search`, {params: params}),
     searchHotel: () => axios.get(`${domain}/hotel/search/customer`),
     getAllSite: () => axios.get(`${domain}/site/findAll`),
     getHotelDetail: () => axios.get(`${domain}/hotel/detail`),
     
     // tour
     searchTour: (params) => axios.get(`${domain}/tour/search`, {params: params}),
-    getTourDetail: () => axios.get('tour/detail'),
+    getTourDetail: (id) => axios.get(`${domain}/tour/detail/${id}`),
     
     // booking room, tour
     getBookingRoom: () => axios.get(`${domain}/booking-room/booking`),

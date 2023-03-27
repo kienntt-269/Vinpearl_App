@@ -2,7 +2,7 @@ import { StyleSheet, ScrollView, View, Text, ImageBackground} from 'react-native
 import React from 'react'
 import { useSelector } from 'react-redux';
 import { selectUser } from '../redux/user/userSlice';
-const banner = {uri: 'http://192.168.1.12:8080/home/banner.png'};
+const banner = {uri: 'http://192.168.1.6:8080/home/banner.png'};
 
 const Banner = () => {
     const user = useSelector(selectUser);

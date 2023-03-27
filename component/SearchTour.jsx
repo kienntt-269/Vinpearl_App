@@ -5,6 +5,7 @@ import Banner from './Banner'
 import { AntDesign } from '@expo/vector-icons'; 
 import homeApi from '../api/home/home';
 import Price from '../utils/Price';
+import DefaultStyle from '../theme';
 
 const SearchTour = ({navigation}) => {
     const [listOfSuggest, setListOfSuggest] = useState([])
@@ -74,22 +75,22 @@ const SearchTour = ({navigation}) => {
         {
             id: 2,
             name: "Phú Quốc",
-            path: "http://192.168.1.12:8080/home/phuquoc.png",
+            path: "http://192.168.1.6:8080/home/phuquoc.png",
         },
         {
             id: 3,
             name: "Đà Nẵng",
-            path: "http://192.168.1.12:8080/home/danang.png",
+            path: "http://192.168.1.6:8080/home/danang.png",
         },
         {
             id: 1,
             name: "Nha Trang",
-            path: "http://192.168.1.12:8080/home/nhatrang.png",
+            path: "http://192.168.1.6:8080/home/nhatrang.png",
         },
         {
             id: 4,
             name: "Hội An",
-            path: "http://192.168.1.12:8080/home/hoian.png",
+            path: "http://192.168.1.6:8080/home/hoian.png",
         },
     ]
 
@@ -105,7 +106,7 @@ const SearchTour = ({navigation}) => {
                 style={{width: '100%', height: 182}}
                 source={{uri: item.path}}
             />
-            <Text style={styles.nameSite}>
+            <Text style={[DefaultStyle.text, styles.nameSite]}>
                 {item.name}
             </Text>
         </TouchableOpacity>
@@ -124,10 +125,10 @@ const SearchTour = ({navigation}) => {
                 source={{uri: item.path}}
             />
             <View>
-              <Text numberOfLines={2} style={styles.namePost}>
+              <Text numberOfLines={2} style={[DefaultStyle.text, styles.namePost]}>
                 {item.name}
               </Text>
-              <Text style={styles.price}>
+              <Text style={[DefaultStyle.text, styles.price]}>
                 <Price value={item.priceMin}/>
               </Text>
             </View>
@@ -138,13 +139,15 @@ const SearchTour = ({navigation}) => {
         <Banner/>
         <View style={styles.container}>
             <TextInput
+                style={DefaultStyle.text}
                 placeholder="Tìm điểm đến hoặc hoạt động"
                 leading={() => <AntDesign name="search1" size={24} color="#E3AD46" />}
             />
             <View style={styles.homeSelect}>
                 {
-                    listTypeOfTour ? listTypeOfTour.map((item, index) => {
+                    listTypeOfTour ? listTypeOfTour.map((item, index) => (
                         <View key={index} style={styles.item}>
+                            <Text>{item.name}</Text>
                             <TouchableHighlight
                                 onPress={() => navigation.navigate('ResultSearchTour', {
                                     id: item.id,
@@ -152,17 +155,19 @@ const SearchTour = ({navigation}) => {
                                 })}
                                 style={styles.wrapper}
                             >
-                                <View>
+                                <Text style={styles.name}>
                                     {item.icon}
-                                </View>
-                                <Text style={styles.name}>{item.name}</Text>
+                                    <Text>
+                                        {item.name}
+                                    </Text>
+                                </Text>
                             </TouchableHighlight>
                         </View>
-                    }) : null
+                    )) : null
                 }
             </View>
-            <View style={styles.site}>
-                <Text style={styles.title}>Điểm đến yêu thích</Text>
+            <View style={[DefaultStyle.text, styles.site]}>
+                <Text style={[DefaultStyle.text, styles.title]}>Điểm đến yêu thích</Text>
                 <FlatList
                     horizontal={true}
                     data={listOfSite}
@@ -171,7 +176,7 @@ const SearchTour = ({navigation}) => {
                 />
             </View>
             <View style={styles.suggest}>
-                <Text style={styles.title}>Sản phẩm dành cho bạn</Text>
+                <Text style={[DefaultStyle.text, styles.title]}>Sản phẩm dành cho bạn</Text>
                 <FlatList
                     horizontal={true}
                     data={listOfSuggest}
@@ -200,14 +205,19 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         flexWrap: 'wrap',
         alignItems: 'flex-start',
+
     },
     item: {
-        width: '20%',
-        padding: 15,
-        shadowColor: 'black',
+        width: '25%',
+    },
+    iconName: {
+        width: '100%',
+        shadowColor: '#E3AD46',
         borderWidth: 1,
         borderColor: "#ccc",
-        borderRadius: 6,
+        flex: 1,
+    },
+    wrapper: {
     },
     site: {
 
@@ -228,6 +238,9 @@ const styles = StyleSheet.create({
         position: 'relative',
         width: 150,
         paddingRight: 15,
+    },
+    name: {
+        flexDirection: 'column',
     },
     nameSite: {
         position: 'absolute',

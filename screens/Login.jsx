@@ -8,6 +8,7 @@ import { login } from '../redux/user/userSlice';
 import { useDispatch, useSelector} from  'react-redux'
 import { selectUser } from '../redux/user/userSlice';
 import accountApi from '../api/account';
+import DefaultStyle from '../theme';
 
 const Login = ({ navigation }) => {
   
@@ -52,8 +53,8 @@ const Login = ({ navigation }) => {
         backgroundColor: COLORS.white
       }}
     >
-      <Text style={styles.welcome}>Welcome Back! 😍</Text>
-      <Text>Happy to see you again! Please enter your email and password to login to your account.</Text>
+      <Text style={[DefaultStyle.text, styles.welcome]}>Welcome Back! 😍</Text>
+      <Text style={DefaultStyle.text}>Happy to see you again! Please enter your email and password to login to your account.</Text>
       {/* <TouchableWithoutFeedback onPress={Keyboard.dismiss}> */}
         <View>
           <Image 
@@ -61,7 +62,7 @@ const Login = ({ navigation }) => {
               source={{uri:'http://192.168.234.1/images/logo-header.png'}}
           />
         </View>
-        <Text style={{color: COLORS.black, fontWeight: '600', textAlign: 'center', fontSize: 26, marginBottom: 40 }}>
+        <Text style={{color: COLORS.black, fontWeight: '600', textAlign: 'center', fontSize: 26, marginBottom: 40, fontFamily: 'Roboto' }}>
           Đăng nhập
         </Text>
         <View style={{ paddingHorizontal: 20, marginBottom: 20, width: '100%' }}>
@@ -74,6 +75,7 @@ const Login = ({ navigation }) => {
             keyboardAppearance='dark'
             returnKeyType='next'
             returnKeyLabel='next'
+            style={DefaultStyle.text}
             onChangeText={(value) => {
               setEmail(value)
             }}
@@ -89,6 +91,7 @@ const Login = ({ navigation }) => {
             keyboardAppearance='dark'
             returnKeyType='go'
             returnKeyLabel='go'
+            style={DefaultStyle.text}
             onChangeText={(value) => {
               setPassword(value)
             }}
@@ -103,7 +106,7 @@ const Login = ({ navigation }) => {
               onPress={() => alert(124)}
           >
               <Link to={{ screen: 'Car' }}>
-                  <Text style={styles.text}>Quên mật khẩu</Text>
+                  <Text style={[DefaultStyle.text, styles.text]}>Quên mật khẩu</Text>
               </Link>
           </Pressable>
           <Pressable
@@ -111,7 +114,7 @@ const Login = ({ navigation }) => {
               onPress={() => alert(124)}
           >
               <Link to={{ screen: 'SignIn', }}>
-                  <Text style={styles.text}>Tạo tài khoản</Text>
+                  <Text style={[DefaultStyle.text, styles.text]}>Tạo tài khoản</Text>
               </Link>
           </Pressable>
         </View>
@@ -128,7 +131,7 @@ const styles = StyleSheet.create({
     lineHeight: 39,
     color: '#0D0D0D',
     fontWeight: '700',
-    // fontFamily: 'NotoSans-Black',
+    fontFamily: 'Roboto-Black',
     paddingTop: 74,
     marginLeft: 24,
     marginBottom: 14,

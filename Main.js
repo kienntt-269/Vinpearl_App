@@ -131,7 +131,7 @@ const Main = () => {
                 headerTitleAlign: "center",
                 headerBackground: () => {
                     <Image
-                      source={{ uri: 'http://192.168.1.12:8080/home/banner.png' }}
+                      source={{ uri: 'http://192.168.1.6:8080/home/banner.png' }}
                     />
                 }
               }}

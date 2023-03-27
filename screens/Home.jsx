@@ -7,6 +7,7 @@ import { Button } from "@react-native-material/core";
 import { Ionicons, FontAwesome, FontAwesome5, MaterialIcons } from '@expo/vector-icons';
 import Banner from '../component/Banner';
 import Price from '../utils/Price';
+import DefaultStyle from '../theme';
 
 const Home = ({ navigation }) => {
   const user = useSelector(selectUser);
@@ -60,7 +61,7 @@ const Home = ({ navigation }) => {
             source={{uri: item.path}}
         />
         <View>
-          <Text numberOfLines={2} style={styles.namePost}>
+          <Text numberOfLines={2} style={[DefaultStyle.text, styles.namePost]}>
             {item.name}
           </Text>
           <View style={styles.price}>
@@ -75,15 +76,15 @@ const Home = ({ navigation }) => {
         style={styles.itemWrapper}
         onPress={() => navigation.navigate('PostDetail', {
             itemId: item.id,
-            name: item.name,
+            name: item.content,
         })}
     >
       <Image 
           style={{width: '100%', height: 192, width: 162, borderRadius: 8}}
           source={{uri: item.path}}
       />
-      <Text style={styles.nameSite}>
-        {item.title}
+      <Text numberOfLines={2} style={[DefaultStyle.text, styles.namePost]}>
+        {item.name}
       </Text>
     </TouchableOpacity>
   );
@@ -97,7 +98,7 @@ const Home = ({ navigation }) => {
             <TouchableHighlight onPress={() => navigation.navigate('SearchHotel')} style={styles.wrapper}>
               <View>
                 <Ionicons name="ios-bed" size={30} color="#EA8E29" />
-                <Text style={styles.name}>Khách sạn</Text>
+                <Text style={[DefaultStyle.text, styles.name]}>Khách sạn</Text>
               </View>
             </TouchableHighlight>
           </View>
@@ -105,7 +106,7 @@ const Home = ({ navigation }) => {
             <TouchableHighlight style={styles.wrapper}>
               <View>
                 <FontAwesome name="plane" size={30} color="#EA8E29" />
-                <Text style={styles.name}>Vé máy bay</Text>
+                <Text style={[DefaultStyle.text, styles.name]}>Vé máy bay</Text>
               </View>
             </TouchableHighlight>
           </View>
@@ -113,7 +114,7 @@ const Home = ({ navigation }) => {
             <TouchableHighlight onPress={() => navigation.navigate('SearchTour')} style={styles.wrapper}>
               <View>
                 <MaterialIcons name="tour" size={30} color="#EA8E29" />
-                <Text style={styles.name}>Tour & Trải nghiệm</Text>
+                <Text style={[DefaultStyle.text, styles.name]}>Tour & Trải nghiệm</Text>
               </View>
             </TouchableHighlight>
           </View>
@@ -121,13 +122,13 @@ const Home = ({ navigation }) => {
             <TouchableHighlight style={styles.wrapper}>
               <View>
                 <FontAwesome5 name="studiovinari" size={30} color="#EA8E29" />
-                <Text style={styles.name}>VinWonders</Text>
+                <Text style={[DefaultStyle.text, styles.name]}>VinWonders</Text>
               </View>
             </TouchableHighlight>
           </View>
         </View>
         <View style={styles.suggest}>
-          <Text style={styles.title}>Gợi ý cho bạn</Text>
+          <Text style={[DefaultStyle.text, styles.title]}>Gợi ý cho bạn</Text>
           <FlatList
               horizontal={true}
               data={listOfSuggest}
@@ -136,7 +137,7 @@ const Home = ({ navigation }) => {
           />
         </View>
         <View style={styles.suggest}>
-          <Text style={styles.title}>Đánh giá của khách hàng</Text>
+          <Text style={[DefaultStyle.text, styles.title]}>Đánh giá của khách hàng</Text>
           <FlatList
               horizontal={true}
               data={listOfPost}
@@ -170,12 +171,13 @@ const styles = StyleSheet.create({
   },
   name: {
     marginTop: 10,
-    fontWeight: '500'
+    fontWeight: '600'
   },
   suggest: {
     paddingLeft: 15,
     fontSize: 24,
-    fontWeight: '500',
+    fontWeight: '700',
+    marginVertical: 20,
   },
   itemWrapper: {
     width: 150,
@@ -188,18 +190,18 @@ const styles = StyleSheet.create({
     bottom: 15,
     color: '#FFF',
     fontSize: 16,
-    fontWeight: '500',
+    fontWeight: '700',
   },
   namePost: {
     marginTop: 10,
-    fontWeight: '500'
+    fontWeight: '700'
   },
   price: {
     
   },
   title: {
     fontSize: 22,
-    fontWeight: '600',
+    fontWeight: '700',
     lineHeight: 28,
     marginVertical: 12,
   },
