@@ -14,6 +14,7 @@ const ResultSearchTour = ({ route, navigation }) => {
     const { itemId, typeOfTourId } = route.params;
     const { nameParam } = route.params;
     const [listOfTour, setListOfTour] = useState([])
+    const [totalTour, setTotalTour] = useState(0)
     useEffect(() => {
       const getListOfTour = async () => {
         try {
@@ -27,6 +28,7 @@ const ResultSearchTour = ({ route, navigation }) => {
             const res = await homeApi.searchTour(data);
             console.log(res.data.data);
             setListOfTour(res.data.data.content);
+            setTotalTour(res.data.data.totalElements);
         } catch(err) {
             console.log(err)
         }
@@ -41,16 +43,17 @@ const ResultSearchTour = ({ route, navigation }) => {
           value={nameParam || ""}
         />
         <View style={styles.resultHeader}>
-          <Text style={[DefaultStyle.text, styles.filter]}>
-            Có
-            <Text style={styles.number}>7</Text>
-            kết quả tìm kiếm</Text>
+          <View style={[DefaultStyle.text, styles.filter]}>
+            <Text style={styles.number1}>Có</Text>
+            <Text style={styles.number}>{totalTour}</Text>
+            <Text style={styles.number1}>kết quả tìm kiếm</Text>
+          </View>
           <TouchableOpacity
             style={styles.filter}
             onPress={() => navigation.navigate('OptionFilter')}
           >
-            <Text style={DefaultStyle.text}>Bộ lọc và sắp xếp</Text>
-            <AntDesign name="filter" size={24} color="#8C8C90" />
+            <Text style={[DefaultStyle.text, styles.number1]}>Bộ lọc và sắp xếp</Text>
+            <AntDesign style={styles.filter} name="filter" size={20} color="#8C8C90" />
           </TouchableOpacity>
         </View>
         <View>
@@ -69,14 +72,14 @@ const ResultSearchTour = ({ route, navigation }) => {
                       source={{uri: item.path}}
                   />
                   <View style={styles.description}>
-                    <Text numberOfLines={2} style={[DefaultStyle.text, styles.nameTour]}>
+                    <Text numberOfLines={1} style={[DefaultStyle.text, styles.nameTour]}>
                       {item.name}
                     </Text>
                     <FlatList
                       horizontal={true}
                       data={['Trả góp 0%', 'Nghỉ lẽ 30/4', 'Mayfest Combo', '3N2Đ']}
                       renderItem={({item, index}) => (
-                        <View>
+                        <View style={{marginRight: 4}}>
                           <Text style={[DefaultStyle.text, index == 0 || index == 3 ? styles.installment : styles.holiday]}>
                             {item}
                           </Text>
@@ -141,29 +144,37 @@ export default ResultSearchTour
 
 const styles = StyleSheet.create({
     resultSearchTour: {
-      margin: 25,
-      width: '100%',
+      flex: 1,
+      padding: 25,
       backgroundColor: '#F6F6F6',
     },
     resultHeader: {
-
+      flexDirection: 'row',
+      justifyContent:'space-between',
+      alignItems: 'center',
+      marginBottom: 10,
+    },
+    number1: {
+      fontSize: 12,
+      fontWeight: '700',
+      color: "#8C8C90",
     },
     number: {
-      color: "#ccc",
+      color: "#E8952F",
+      paddingHorizontal: 4,
     },
     filter: {
-      fontSize: 11,
-      fontWeight: '500',
-      color: "#8C8C90",
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
     },
     itemWrapper: {
       borderRadius: 12,
       shadowColor: 'black',
       backgroundColor: 'white',
-      padding: 15,
     },
     description: {
-      paddingHorizontal: 25,
+      paddingHorizontal: 15,
       marginBottom: 15,
       backgroundColor: "#FFF",
     },
@@ -188,6 +199,7 @@ const styles = StyleSheet.create({
       fontWeight: 400,
       borderRadius: 16,
       backgroundColor: '#69ADF4',
+      paddingHorizontal: 8,
     },
     holiday: {
       fontSize: 12,
@@ -195,6 +207,7 @@ const styles = StyleSheet.create({
       fontWeight: 400,
       borderRadius: 16,
       backgroundColor: '#FC8D47',
+      paddingHorizontal: 8,
     },
     boxBottom: {
 

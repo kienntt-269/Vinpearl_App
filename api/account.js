@@ -1,11 +1,14 @@
 import axiosClient from './axiosClient'
 import axios from 'axios'
+import domain from './domain'
 
 const accountApi = {
-    login: (params) => axios.post(`http://192.168.1.6:8080/api/v1/customer/login`, params),
+    login: (params) => axios.post(`${domain}/customer/login`, params),
     // login: (data) => axiosClient.post(`customer/login`, data),
-    register: (params) => axios.post(`http://192.168.1.6:8080/api/v1/customer/register`, params),
-    update: (params) => axiosClient.post(`customer/update`, params),
+    register: (params) => axios.post(`${domain}/customer/register`, params),
+    register: (params) => axios.post(`${domain}/customer/register`, params),
+    detail: (id) => axios.post(`${domain}/customer/detail/${id}`),
+    update: (id, params) => axios.post(`${domain}/customer/update/${id}`, params),
 }
 
 export default accountApi

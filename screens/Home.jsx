@@ -65,7 +65,7 @@ const Home = ({ navigation }) => {
             {item.name}
           </Text>
           <View style={styles.price}>
-            <Price value={item.priceMin}/>
+            <Price active={true} value={item.priceMin}/>
           </View>
         </View>
     </TouchableOpacity>
@@ -97,7 +97,7 @@ const Home = ({ navigation }) => {
           <View style={styles.item}>
             <TouchableHighlight onPress={() => navigation.navigate('SearchHotel')} style={styles.wrapper}>
               <View>
-                <Ionicons name="ios-bed" size={30} color="#EA8E29" />
+                <Ionicons name="ios-bed" size={30} color="#E8952F" />
                 <Text style={[DefaultStyle.text, styles.name]}>Khách sạn</Text>
               </View>
             </TouchableHighlight>
@@ -105,7 +105,7 @@ const Home = ({ navigation }) => {
           <View style={styles.item}>
             <TouchableHighlight style={styles.wrapper}>
               <View>
-                <FontAwesome name="plane" size={30} color="#EA8E29" />
+                <FontAwesome name="plane" size={30} color="#E8952F" />
                 <Text style={[DefaultStyle.text, styles.name]}>Vé máy bay</Text>
               </View>
             </TouchableHighlight>
@@ -113,7 +113,7 @@ const Home = ({ navigation }) => {
           <View style={styles.item}>
             <TouchableHighlight onPress={() => navigation.navigate('SearchTour')} style={styles.wrapper}>
               <View>
-                <MaterialIcons name="tour" size={30} color="#EA8E29" />
+                <MaterialIcons name="tour" size={30} color="#E8952F" />
                 <Text style={[DefaultStyle.text, styles.name]}>Tour & Trải nghiệm</Text>
               </View>
             </TouchableHighlight>
@@ -121,7 +121,7 @@ const Home = ({ navigation }) => {
           <View style={styles.item}>
             <TouchableHighlight style={styles.wrapper}>
               <View>
-                <FontAwesome5 name="studiovinari" size={30} color="#EA8E29" />
+                <FontAwesome5 name="studiovinari" size={30} color="#E8952F" />
                 <Text style={[DefaultStyle.text, styles.name]}>VinWonders</Text>
               </View>
             </TouchableHighlight>

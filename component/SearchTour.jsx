@@ -2,10 +2,12 @@ import { StyleSheet, ScrollView, View, Text, TouchableHighlight, FlatList, Touch
 import React, { useState, useEffect } from 'react'
 import { TextInput } from "@react-native-material/core";
 import Banner from './Banner'
-import { AntDesign } from '@expo/vector-icons'; 
+import { AntDesign, Entypo } from '@expo/vector-icons'; 
 import homeApi from '../api/home/home';
 import Price from '../utils/Price';
 import DefaultStyle from '../theme';
+import { FontAwesome5 } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const SearchTour = ({navigation}) => {
     const [listOfSuggest, setListOfSuggest] = useState([])
@@ -31,7 +33,7 @@ const SearchTour = ({navigation}) => {
     const listTypeOfTour = [
         {
             id: 1,
-            icon: <AntDesign name="rest" size={24} color="#E3AD46" />,
+            icon: <FontAwesome5 name="umbrella-beach" size={24} color="#E3AD46" />,
             name: "Gói nghỉ dưỡng",
         },
         {
@@ -41,32 +43,32 @@ const SearchTour = ({navigation}) => {
         },
         {
             id: 3,
-            icon: <AntDesign name="rest" size={24} color="#E3AD46" />,
+            icon: <MaterialCommunityIcons name="truck-plus" size={24} color="#E3AD46" />,
             name: "Vận chuyển",
         },
         {
             id: 4,
-            icon: <AntDesign name="rest" size={24} color="#E3AD46" />,
+            icon: <FontAwesome5 name="table-tennis" size={24} color="#E3AD46" />,
             name: "Vinpearl Golf",
         },
         {
             id: 5,
-            icon: <AntDesign name="rest" size={24} color="#E3AD46" />,
+            icon: <MaterialCommunityIcons name="silverware-fork-knife" size={24} color="#E3AD46" />,
             name: "Ẩm thực",
         },
         {
             id: 6,
-            icon: <AntDesign name="rest" size={24} color="#E3AD46" />,
+            icon: <Entypo name="map" size={24} color="#E3AD46" />,
             name: "Tour",
         },
         {
             id: 7,
-            icon: <AntDesign name="rest" size={24} color="#E3AD46" />,
+            icon: <Entypo name="ticket" size={24} color="#E3AD46" />,
             name: "Vé tham quan",
         },
         {
             id: 8,
-            icon: <AntDesign name="rest" size={24} color="#E3AD46" />,
+            icon: <FontAwesome5 name="spa" size={24} color="#E3AD46" />,
             name: "Spa",
         },
     ]
@@ -147,7 +149,6 @@ const SearchTour = ({navigation}) => {
                 {
                     listTypeOfTour ? listTypeOfTour.map((item, index) => (
                         <View key={index} style={styles.item}>
-                            <Text>{item.name}</Text>
                             <TouchableHighlight
                                 onPress={() => navigation.navigate('ResultSearchTour', {
                                     id: item.id,
@@ -155,12 +156,10 @@ const SearchTour = ({navigation}) => {
                                 })}
                                 style={styles.wrapper}
                             >
-                                <Text style={styles.name}>
-                                    {item.icon}
-                                    <Text>
-                                        {item.name}
-                                    </Text>
-                                </Text>
+                                <View style={styles.name}>
+                                    <Text style={styles.box}>{item.icon}</Text>
+                                    <Text style={[DefaultStyle.text, {textAlign: 'center', fontSize: 12, lineHeight: 14,}]}>{item.name}</Text>
+                                </View>
                             </TouchableHighlight>
                         </View>
                     )) : null
@@ -198,17 +197,21 @@ const styles = StyleSheet.create({
 
     },
     searchTour: {
-
+        backgroundColor: "#FFFFFF",
     },
     homeSelect: {
         flex: 1,
         flexDirection: 'row',
         flexWrap: 'wrap',
         alignItems: 'flex-start',
-
+        marginTop: 18,
+        backgroundColor: '#FFF',
     },
     item: {
         width: '25%',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: 6,
     },
     iconName: {
         width: '100%',
@@ -218,15 +221,18 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     wrapper: {
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     site: {
 
     },
     title: {
-        fontSize: 22,
-        fontWeight: '600',
-        lineHeight: 28,
+        fontSize: 18,
+        fontWeight: '700',
+        lineHeight: 24,
         marginVertical: 12,
+
     },
     itemWrapperSuggest: {
         position: 'relative',
@@ -240,7 +246,24 @@ const styles = StyleSheet.create({
         paddingRight: 15,
     },
     name: {
-        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexWrap: 'wrap',
+        width: '100%',
+        textAlign: 'center',
+        paddingHorizontal: 6,
+        marginBottom: 8,
+    },
+    box: {
+        marginBottom: 6,
+        padding: 10,
+        borderRadius: 4,
+        backgroundColor: 'white',
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.4,
+        shadowRadius: 2,
+        elevation: 4, // thêm thuộc tính elevation cho Android
     },
     nameSite: {
         position: 'absolute',

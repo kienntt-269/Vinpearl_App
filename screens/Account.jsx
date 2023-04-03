@@ -2,42 +2,8 @@ import { StyleSheet, Text, View, Image, FlatList } from 'react-native'
 import React from 'react'
 import { FontAwesome } from '@expo/vector-icons'; 
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import OrderManagement from '../component/OrderManagement';
 import { useSelector } from 'react-redux';
 import { selectUser } from '../redux/user/userSlice';
-
-const K_OPTIONS_SELL = [
-  {
-    id: '1',
-    icon: 'user-circle-o',
-    title: 'Thông tin cá nhân',
-    optionNavigate: 'PersonalInfo'
-  },
-  {
-    id: '2',
-    icon: 'history',
-    title: 'Lịch sử đơn hàng',
-    optionNavigate: 'TransactionHistory'
-  },
-  {
-    id: '3',
-    icon: 'cart-arrow-down',
-    title: 'Giỏ hàng',
-    optionNavigate: 'Cart'
-  },
-  {
-    id: '4',
-    icon: 'user-circle',
-    title: 'Quản lý đơn hàng',
-    optionNavigate: 'OrderManagement'
-  },
-  {
-    id: '5',
-    icon: 'user-circle',
-    title: 'Đăng xuất',
-    optionNavigate: 'Login'
-  },
-]
 
 const K_OPTIONS_USER = [
   {
@@ -53,14 +19,20 @@ const K_OPTIONS_USER = [
     optionNavigate: 'TransactionHistory'
   },
   {
-    id: '3',
+    id: '4',
     icon: 'cart-arrow-down',
     title: 'Giỏ hàng',
     optionNavigate: 'Cart'
   },
   {
     id: '5',
-    icon: 'user-circle',
+    icon: 'building',
+    title: 'Khách sạn',
+    optionNavigate: 'ResultSearchHotel',
+  },
+  {
+    id: '6',
+    icon: 'sign-out',
     title: 'Đăng xuất',
     optionNavigate: 'Login'
   },
@@ -92,7 +64,7 @@ const Account = ({ navigation }) => {
         />
       </View>
       <FlatList
-        data={user.role == 'user' ? K_OPTIONS_USER : K_OPTIONS_SELL}
+        data={K_OPTIONS_USER}
         renderItem={renderItem}
         keyExtractor={item => item.id}
       />

@@ -29,6 +29,16 @@ import ResultSearchHotel from './component/ResultSearchHotel';
 import ResultSearchTour from './component/ResultSearchTour';
 import { Image } from 'react-native';
 import PostDetail from './component/PostDetail';
+import OptionFilter from './component/OptionFilter';
+import RangePicker from './component/RangePicker';
+import HotelDetail from './component/HotelDetail';
+import SummaryHotel from './component/SummaryHotel';
+import FormBooking from './component/FormBooking';
+import ConfirmBooking from './component/ConfirmBooking';
+import PaymentBooking from './component/PaymentBooking';
+import MyOrder from './screens/MyOrder';
+import { AntDesign } from '@expo/vector-icons';
+import { View, Text } from 'react-native';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -66,7 +76,7 @@ const Auth = () => {
     />
     <Tab.Screen
         name="Đơn hàng"
-        component={TransactionHistory}
+        component={MyOrder}
         options={{headerShown: false}}
     />
     <Tab.Screen
@@ -79,6 +89,7 @@ const Auth = () => {
 }
 
 const Main = () => {
+  const cartItems = useSelector(state => state.cart);
     return (
         <NavigationContainer>
           <Stack.Navigator
@@ -93,17 +104,7 @@ const Main = () => {
             <Stack.Screen
               name='SignIn'
               component={SignIn}
-              options={{
-                title: 'Đăng ký', //Set Header Title
-                headerStyle: {
-                  backgroundColor: '#307ecc', //Set Header color
-                },
-                headerTintColor: '#fff', //Set Header text color
-                headerTitleStyle: {
-                  fontWeight: 'bold', //Set Header text style
-                },
-                headerTitleAlign: "center",
-              }}
+              options={{headerShown: false}}
             />
             <Stack.Screen 
               name='Auth'
@@ -113,54 +114,119 @@ const Main = () => {
             <Stack.Screen 
               name='SearchTour'
               component={SearchTour}
-              options={{
-                title: 'Tìm kiếm tour', //Set Header Title
-                headerStyle: {
-                  flex: 1,
-                  justifyContent: 'center',
-                  height: 100,
-                  width: '100%',
-                  flexDirection: 'row',
-                  backgroundColor: "#FFF",
-                },
-                headerTintColor: '#000', //Set Header text color
-                headerTitleStyle: {
-                  fontWeight: '400', //Set Header text style
-                },
-                headerTitleAlign: "center",
-                headerTitleAlign: "center",
-                headerBackground: () => {
-                    <Image
-                      source={{ uri: 'http://192.168.1.6:8080/home/banner.png' }}
-                    />
-                }
-              }}
+              options={{headerShown: false}}
+              // options={{
+              //   title: 'Tìm kiếm tour', //Set Header Title
+              //   headerStyle: {
+              //     flex: 1,
+              //     justifyContent: 'center',
+              //     height: 100,
+              //     width: '100%',
+              //     flexDirection: 'row',
+              //     backgroundColor: "#FFF",
+              //   },
+              //   headerTintColor: '#000', //Set Header text color
+              //   headerTitleStyle: {
+              //     fontWeight: '400', //Set Header text style
+              //   },
+              //   headerTitleAlign: "center",
+              //   headerTitleAlign: "center",
+              //   headerBackground: () => {
+              //       <Image
+              //         source={{ uri: 'http://192.168.1.6:8080/home/banner.png' }}
+              //       />
+              //   }
+              // }}
             />
             <Stack.Screen 
               name='SearchHotel'
               component={SearchHotel}
               options={{
-                title: 'Tìm kiếm khách sạn', //Set Header Title
+                title: 'Tìm khách sạn', //Set Header Title
                 headerStyle: {
-                  backgroundColor: '#307ecc', //Set Header color
+                  backgroundColor: '#C5C5C5', //Set Header color
                 },
-                headerTintColor: '#fff', //Set Header text color
+                headerTintColor: '#2B2F34', //Set Header text color
                 headerTitleStyle: {
                   fontWeight: 'bold', //Set Header text style
                 },
+                headerTitleAlign: "center",
+                headerTitleAlign: "center",
+              }}
+            />
+            <Stack.Screen 
+              name='SummaryHotel'
+              component={SummaryHotel}
+              options={{
+                title: 'Tổng kết hành trình', //Set Header Title
+                headerStyle: {
+                  backgroundColor: '#C5C5C5', //Set Header color
+                },
+                headerTintColor: '#2B2F34', //Set Header text color
+                headerTitleStyle: {
+                  fontWeight: 'bold', //Set Header text style
+                },
+                headerTitleAlign: "center",
+                headerTitleAlign: "center",
+              }}
+            />
+            <Stack.Screen 
+              name='RangePicker'
+              component={RangePicker}
+              options={{
+                title: 'Chọn ngày', //Set Header Title
+                headerStyle: {
+                  backgroundColor: '#C5C5C5', //Set Header color
+                },
+                headerTintColor: '#2B2F34', //Set Header text color
+                headerTitleStyle: {
+                  fontWeight: 'bold', //Set Header text style
+                },
+                headerTitleAlign: "center",
+                headerTitleAlign: "center",
+              }}
+            />
+            <Stack.Screen 
+              name='OptionFilter'
+              component={OptionFilter}
+              options={{
+                title: 'Bộ lọc & Sắp xếp', //Set Header Title
+                headerStyle: {
+                  backgroundColor: '#C5C5C5', //Set Header color
+                },
+                headerTintColor: '#2B2F34', //Set Header text color
+                headerTitleStyle: {
+                  fontWeight: 'bold', //Set Header text style
+                },
+                headerTitleAlign: "center",
               }}
             />
             <Stack.Screen 
               name='ResultSearchHotel'
               component={ResultSearchHotel}
               options={{
-                title: 'Tìm kiếm', //Set Header Title
+                title: 'Chi tiết khách sạn', //Set Header Title
                 headerStyle: {
-                  backgroundColor: '#FFF', //Set Header color
+                  backgroundColor: '#C5C5C5', //Set Header color
                 },
-                headerTintColor: '#000', //Set Header text color
+                headerTintColor: '#2B2F34', //Set Header text color
                 headerTitleStyle: {
-                  fontWeight: '400', //Set Header text style
+                  fontWeight: 'bold', //Set Header text style
+                },
+                headerTitleAlign: "center",
+              }}
+            />
+            <Stack.Screen 
+              name='HotelDetail'
+              component={HotelDetail}
+              options={{
+                title: 'Danh sách phòng', //Set Header Title
+                headerStyle: {
+                  backgroundColor: '#C5C5C5', //Set Header color
+                },
+                headerTintColor: '#2B2F34', //Set Header text color
+                headerTitleStyle: {
+                  fontWeight: 'bold', //Set Header text style
                 },
                 headerTitleAlign: "center",
               }}
@@ -169,13 +235,13 @@ const Main = () => {
               name='ResultSearchTour'
               component={ResultSearchTour}
               options={{
-                title: 'Tìm kiếm', //Set Header Title
+                title: 'Danh sách tour', //Set Header Title
                 headerStyle: {
-                  backgroundColor: '#FFF', //Set Header color
+                  backgroundColor: '#C5C5C5', //Set Header color
                 },
-                headerTintColor: '#000', //Set Header text color
+                headerTintColor: '#2B2F34', //Set Header text color
                 headerTitleStyle: {
-                  fontWeight: '400', //Set Header text style
+                  fontWeight: 'bold', //Set Header text style
                 },
                 headerTitleAlign: "center",
               }}
@@ -186,9 +252,9 @@ const Main = () => {
               options={{
                 title: 'Thông tin cá nhân', //Set Header Title
                 headerStyle: {
-                  backgroundColor: '#307ecc', //Set Header color
+                  backgroundColor: '#C5C5C5', //Set Header color
                 },
-                headerTintColor: '#fff', //Set Header text color
+                headerTintColor: '#2B2F34', //Set Header text color
                 headerTitleStyle: {
                   fontWeight: 'bold', //Set Header text style
                 },
@@ -201,9 +267,54 @@ const Main = () => {
               options={{
                 title: 'Chi tiết bài viết', //Set Header Title
                 headerStyle: {
-                  backgroundColor: '#307ecc', //Set Header color
+                  backgroundColor: '#C5C5C5', //Set Header color
                 },
-                headerTintColor: '#fff', //Set Header text color
+                headerTintColor: '#2B2F34', //Set Header text color
+                headerTitleStyle: {
+                  fontWeight: 'bold', //Set Header text style
+                },
+                headerTitleAlign: "center",
+              }}
+            />
+            <Stack.Screen 
+              name='FormBooking'
+              component={FormBooking}
+              options={{
+                title: 'Thông tin người đặt', //Set Header Title
+                headerStyle: {
+                  backgroundColor: '#C5C5C5', //Set Header color
+                },
+                headerTintColor: '#2B2F34', //Set Header text color
+                headerTitleStyle: {
+                  fontWeight: 'bold', //Set Header text style
+                },
+                headerTitleAlign: "center",
+              }}
+            />
+            <Stack.Screen 
+              name='PaymentBooking'
+              component={PaymentBooking}
+              options={{
+                title: 'Thanh toán', //Set Header Title
+                headerStyle: {
+                  backgroundColor: '#C5C5C5', //Set Header color
+                },
+                headerTintColor: '#2B2F34', //Set Header text color
+                headerTitleStyle: {
+                  fontWeight: 'bold', //Set Header text style
+                },
+                headerTitleAlign: "center",
+              }}
+            />
+            <Stack.Screen 
+              name='ConfirmBooking'
+              component={ConfirmBooking}
+              options={{
+                title: 'Xác nhận', //Set Header Title
+                headerStyle: {
+                  backgroundColor: '#C5C5C5', //Set Header color
+                },
+                headerTintColor: '#2B2F34', //Set Header text color
                 headerTitleStyle: {
                   fontWeight: 'bold', //Set Header text style
                 },
@@ -216,9 +327,9 @@ const Main = () => {
               options={{
                 title: 'Lịch sử giao dịch', //Set Header Title
                 headerStyle: {
-                  backgroundColor: '#307ecc', //Set Header color
+                  backgroundColor: '#C5C5C5', //Set Header color
                 },
-                headerTintColor: '#fff', //Set Header text color
+                headerTintColor: '#2B2F34', //Set Header text color
                 headerTitleStyle: {
                   fontWeight: 'bold', //Set Header text style
                 },
@@ -231,9 +342,9 @@ const Main = () => {
               options={{
                 title: 'Giỏ hàng', //Set Header Title
                 headerStyle: {
-                  backgroundColor: '#307ecc', //Set Header color
+                  backgroundColor: '#C5C5C5', //Set Header color
                 },
-                headerTintColor: '#fff', //Set Header text color
+                headerTintColor: '#2B2F34', //Set Header text color
                 headerTitleStyle: {
                   fontWeight: 'bold', //Set Header text style
                 },
@@ -254,6 +365,30 @@ const Main = () => {
                     fontWeight: 'bold', //Set Header text style
                   },
                   headerTitleAlign: "center",
+                  headerRight: () => (
+                    <View style={{ marginRight: 10 }}>
+                      <AntDesign name="shoppingcart" size={28} color="#FFF" />
+                      {cartItems.length > 0 && (
+                        <View
+                          style={{
+                            position: 'absolute',
+                            backgroundColor: '#E8952F',
+                            width: 20,
+                            height: 20,
+                            borderRadius: '50%',
+                            top: -6,
+                            right: -5,
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                          }}
+                        >
+                          <Text style={{ color: 'white', fontWeight: 'bold' }}>
+                            {cartItems.length}
+                          </Text>
+                        </View>
+                      )}
+                    </View>
+                  )
                 }
               )}
             />
@@ -297,9 +432,9 @@ const Main = () => {
               options={{
                 title: 'Đơn hàng mới', //Set Header Title
                 headerStyle: {
-                  backgroundColor: '#307ecc', //Set Header color
+                  backgroundColor: '#C5C5C5', //Set Header color
                 },
-                headerTintColor: '#fff', //Set Header text color
+                headerTintColor: '#2B2F34', //Set Header text color
                 headerTitleStyle: {
                   fontWeight: 'bold', //Set Header text style
                 },

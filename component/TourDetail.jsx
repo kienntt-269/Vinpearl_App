@@ -6,9 +6,12 @@ import { AntDesign, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-i
 import RenderHtml from 'react-native-render-html';
 import { Button } from '@react-native-material/core';
 import DefaultStyle from '../theme';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { addToCart, removeFromCart  } from '../redux/tour-cart/cartItemsSlide';
 
 const TourDetail = ({ route, navigation }) => {
+    const dispatch = useDispatch();
+
     /* 2. Get the param */
     const { itemId } = route.params;
     const { nameParam } = route.params;
@@ -40,7 +43,19 @@ const TourDetail = ({ route, navigation }) => {
           }
         }
         getListOfSuggest();
-      }, [])
+    }, []);
+
+    const cartItem = useSelector(state =>
+        state.cart.find(item => item.id === id)
+    );
+
+    const handleAddToCart = () => {
+        dispatch(addToCart({ id, name, price }));
+    };
+
+    const handleRemoveFromCart = () => {
+        dispatch(removeFromCart(id));
+    };
 
     return (
         <View style={{flex: 1}}>
@@ -51,6 +66,21 @@ const TourDetail = ({ route, navigation }) => {
                         style={{height: 224, width: '100%', borderBottomLeftRadius: 8, borderBottomRightRadius: 8}}
                         source={{uri: 'http://192.168.1.6:8080/home/banner.png'}}
                     />
+                    <View>
+                    {
+                        cartItem ? (
+                            <Button
+                                title="Xóa khỏi giỏ hàng"
+                                onPress={handleRemoveFromCart}
+                            />
+                        ) : (
+                            <Button
+                                title="Thêm vào giỏ hàng"
+                                onPress={handleAddToCart}
+                            />
+                        )
+                    }
+                    </View>
                     <View style={styles.TourDetail}>
                         <View style={{paddingVertical: 15,}}>
                             <Text style={[DefaultStyle.text, styles.title]}>HCM - Phú quốc Mayfest Combo</Text>
