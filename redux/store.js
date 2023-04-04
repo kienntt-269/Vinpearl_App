@@ -1,15 +1,16 @@
-import { configureStore } from '@reduxjs/toolkit'
+import { configureStore } from '@reduxjs/toolkit';
 
-import userReducer from './user/userSlice'
-// import productModalReducer from './product-modal/productModalSlice'
-import cartItemsReducer from './tour-cart/cartItemsSlide'
-// import customerReducer from "./customer/customerSlice";
+import userReducer from './user/userSlice';
+// import productModalReducer from './product-modal/productModalSlice';
+import cartItemsReducer from './tour-cart/cartItemsSlide';
+import customerHotelReducer from './customerHotel/customerHotelSlide';
+import customerTourReducer from './customerTour/customerTourSlide';
 
 const store = configureStore({
   reducer: {
     user: userReducer,
-    // customerCar:  customerReducer,
-    // productModal: productModalReducer,
+    customerHotel: customerHotelReducer,
+    customerTour: customerTourReducer,
     cartItems: cartItemsReducer,
   }
 })

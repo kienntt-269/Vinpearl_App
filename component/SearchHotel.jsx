@@ -15,7 +15,7 @@ const SearchHotel = ({ route, navigation }) => {
   const [startDate, setStartDate] = useState(route.params?.startTime || new Date());
   const [endDate, setEndDate] = useState(new Date(new Date().setDate(new Date().getDate() + 2)));
   const [value, setValue] = useState(null);
-  const [numberAudlt, setNumberAudlt] = useState(2);
+  const [numberAdult, setNumberAdult] = useState(2);
   const [numberChildren, setNumberChildren] = useState(0);
   const [siteId, setSiteId] = useState(null);
   const [listOfSite, setListOfSite] = useState([]);
@@ -72,7 +72,7 @@ useEffect(() => {
           navigation.navigate("RangePicker", {
             dataFilter: "dataFilter",
             // siteId: siteId,
-            // numberPerson: numberAudlt + numberChildren,
+            // numberPerson: numberAdult + numberChildren,
         })}
       >
         <Text style={styles.icon}>
@@ -119,7 +119,7 @@ useEffect(() => {
           <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
             <View>
               <Text>
-                <Text style={{color: "#E8952F", fontWeight: '500'}}>{numberAudlt} </Text>
+                <Text style={{color: "#E8952F", fontWeight: '500'}}>{numberAdult} </Text>
                 Người lớn
               </Text>
               <Text>
@@ -133,9 +133,11 @@ useEffect(() => {
       <Button
         onPressIn={() =>
           navigation.navigate("ResultSearchHotel", {
-            dataFilter: "dataFilter",
+            checkIn: startDate.getTime(),
+            checkOut: endDate.getTime(),
             siteId: siteId,
-            numberPerson: numberAudlt + numberChildren,
+            numberAdult: numberAdult,
+            numberChildren: numberChildren,
         })
       }
       uppercase={false}

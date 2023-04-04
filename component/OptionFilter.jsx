@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
+import { StyleSheet, View, Text, TouchableOpacity, ScrollView } from "react-native";
 import React, { useState } from "react";
 import DefaultStyle from "../theme";
 import { AntDesign } from "@expo/vector-icons";
@@ -29,9 +29,33 @@ const OptionFilter = ({ navigation }) => {
     { value: 7, label: 'Vé tham quan'},
     { value: 8, label: 'Spa'},
   ]);
+  const products = [
+    {
+      id: 1,
+      name: "Product A",
+      category: "category1"
+    },
+    {
+      id: 2,
+      name: "Product B",
+      category: "category1"
+    },
+    {
+      id: 3,
+      name: "Product C",
+      category: "category2"
+    },
+    {
+      id: 4,
+      name: "Product D",
+      category: "category3"
+    },
+    // ...
+  ];
+  const [selectedCategory, setSelectedCategory] = useState(null);
   return (
     <View style={{ flex: 1 }}>
-      <View style={styles.wrapper}>
+      {/* <View style={styles.wrapper}>
         <Text style={[DefaultStyle.text, styles.title]}>Xếp theo</Text>
         <DropDownPicker
             open={open}
@@ -44,10 +68,11 @@ const OptionFilter = ({ navigation }) => {
             min={0}
             max={5}
         />
-      </View>
+      </View> */}
       <View style={styles.wrapper}>
         <Text style={[DefaultStyle.text, styles.title]}>Loại sản phẩm</Text>
-        <DropDownPicker
+
+        {/* <DropDownPicker
             open={open}
             value={valueTypeOfTour}
             items={itemTypeOfTour}
@@ -57,7 +82,33 @@ const OptionFilter = ({ navigation }) => {
             multiple={true}
             min={0}
             max={5}
-        />
+        /> */}
+        <View style={{ flex: 1, flexDirection: "row" }}>
+          <ScrollView>
+            <TouchableOpacity onPress={() => setSelectedCategory(null)}>
+              <Text>All</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => setSelectedCategory("category1")}>
+              <Text>Category 1</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => setSelectedCategory("category2")}>
+              <Text>Category 2</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => setSelectedCategory("category3")}>
+              <Text>Category 3</Text>
+            </TouchableOpacity>
+            {/* ... */}
+          </ScrollView>
+          <FlatList
+            data={selectedCategory ? products.filter(p => p.category === selectedCategory) : products}
+            keyExtractor={item => item.id.toString()}
+            renderItem={({ item }) => (
+              <View style={{ margin: 10 }}>
+                <Text>{item.name}</Text>
+              </View>
+            )}
+          />
+        </View>
       </View>
       <View style={styles.wrapper}>
         <Text style={[DefaultStyle.text, styles.title]}>Độ dài kỳ nghỉ</Text>

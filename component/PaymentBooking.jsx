@@ -3,35 +3,22 @@ import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native";
 import { WebView } from "react-native-webview";
 import homeApi from "../api/home/home";
+import { useSelector } from "react-redux";
+import { AntDesign, FontAwesome5 } from '@expo/vector-icons';
+import DefaultStyle from "../theme";
+import { useNavigation } from "@react-navigation/native";
 
 const PaymentBooking = () => {
+    const navigation = useNavigation();
+    const bookingHotelDetail = useSelector(state => state.customerHotel.booking);
     const [url, setUrl] = useState(null);
-    // const data = {
-    //     nameHotel: this.hotelDetail.name,
-    //     nameRoomType: this.roomTypeList[this.numberRoomType].name,
-    //     checkIn: parseInt(this.arrivalDate),
-    //     checkOut: parseInt(this.leaveDate),
-    //     customerId: parseInt(customerId),
-    //     roomTypeId: this.roomTypeList[this.numberRoomType].id,
-    //     serviceId: this.serviceDetail.id,
-    //     hotelId: this.hotelDetail.id,
-    //     numberAdult: this.noParent,
-    //     numberChildren: this.noChildren,
-    //     description: "",
-    //     paymentAmount: this.serviceDetail.price * this.numberPerson,
-    //   }
     const [isPaymentSuccess, setIsPaymentSuccess] = useState(0);
     useEffect(() => {
         const addBookingRoom = async () => {
             try {
-                const data = {
-                    amount: 100000,
-                    orderInfo: "Mua hang tai cua hang ABC",
-                    ip: "192.168.100.3",
-                };
-
-                const res = await homeApi.addBookingRoom(data);
-                setUrl(res.data);
+                const res = await homeApi.addBookingRoom(bookingHotelDetail);
+                console.log(res.data.data.url);
+                setUrl(res.data.data.url);
             } catch (err) {
                 console.log(err);
             }
@@ -49,7 +36,7 @@ const PaymentBooking = () => {
       };
 
     return (
-        <SafeAreaView style={{flex: 1}}>
+        <SafeAreaView style={{flex: 1, paddingHorizontal: 20, backgroundColor: '#FFF'}}>
             {
                 isPaymentSuccess == 0 ? <WebView
                     source={{ uri: url }}
@@ -57,13 +44,37 @@ const PaymentBooking = () => {
                 /> : null
             }
             {
-                isPaymentSuccess == 1 ? <View>
-                    <Text>Thanh toán đơn hàng thành công</Text>
+                isPaymentSuccess == 1 ? 
+                <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+                    <FontAwesome5 name="check-circle" size={70} color="#2dce89" />
+                    <Text style={[DefaultStyle.text, styles.status]}>Thanh toán thành công!</Text>
+                    <Text style={[DefaultStyle.text, styles.desc]}>Cảm ơn bạn đã đặt hàng tại app của chúng tôi. Hãy để ý email của bạn để kiểm tra lại thông tin nhận phòng</Text>
                 </View> : null
             }
             {
-                isPaymentSuccess == 2 ? <View>
-                    <Text>Đơn hàng đã hủy</Text>
+                isPaymentSuccess == 2 ? 
+                <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+                    <AntDesign name="closecircle" size={80} color="#DE3645" />
+                    <Text style={[DefaultStyle.text, styles.status]}> Thanh toán đã hủy!</Text>
+                    <Text style={[DefaultStyle.text, styles.status]}>Rất tiếc bạn đã hủy đơn hàng. Nếu bạn muốn đặt lại vui lòng thực hiện lại giao dịch.</Text>
+                </View> : null
+            }
+            {/* {
+                !isPaymentSuccess ? 
+                <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+                    <AntDesign name="closecircle" size={80} color="#DE3645" />
+                    <Text style={[DefaultStyle.text, styles.status]}>Thanh toán thất bại!</Text>
+                    <Text style={[DefaultStyle.text, styles.status]}>Rất tiếc, đã xảy ra lỗi với đơn hàng của bạn. Vui lòng thử lại hoặc liên hệ hotline 1900232389 (nhánh 3) để biết thêm chi tiết.</Text>
+                </View> : null
+            } */}
+            {
+                isPaymentSuccess && isPaymentSuccess != 0 ? 
+                <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', width: '100%', marginBottom: 15}}>
+                    <Text style={[DefaultStyle.text, styles.contact]}>Liên hệ ngay</Text>
+                    <Text
+                        style={[DefaultStyle.text, styles.goHome]}
+                        onPress={() => navigation.navigate('Trang chủ')}
+                    >Về trang chủ</Text>
                 </View> : null
             }
         </SafeAreaView>
@@ -72,4 +83,35 @@ const PaymentBooking = () => {
 
 export default PaymentBooking;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+    status: {
+        fontSize: 15,
+        fontWeight: '700',
+        paddingVertical: 15,
+    },
+    desc: {
+        fontSize: 13,
+        fontWeight: '600',
+        color: "#B0B2B4",
+    },
+    contact: {
+        fontSize: 15,
+        fontWeight: '500',
+        color: '#E8952F',
+        backgroundColor: '#FFF',
+        borderRadius: 8,
+        borderColor: "#E8952F",
+        borderWidth: 1,
+        paddingHorizontal: 40,
+        paddingVertical: 10,
+    },
+    goHome: {
+        backgroundColor: '#E8952F',
+        color: '#FFF',
+        borderWidth: 1,
+        borderColor: "#E8952F",
+        borderRadius: 8,
+        paddingHorizontal: 40,
+        paddingVertical: 10,
+    }
+});

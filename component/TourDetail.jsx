@@ -8,10 +8,12 @@ import { Button } from '@react-native-material/core';
 import DefaultStyle from '../theme';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart, removeFromCart  } from '../redux/tour-cart/cartItemsSlide';
+import { addBookingTour } from '../redux/customerTour/customerTourSlide';
+import { selectUser } from '../redux/user/userSlice';
 
 const TourDetail = ({ route, navigation }) => {
     const dispatch = useDispatch();
-
+    const user = useSelector(selectUser);
     /* 2. Get the param */
     const { itemId } = route.params;
     const { nameParam } = route.params;
@@ -37,7 +39,6 @@ const TourDetail = ({ route, navigation }) => {
                   setPriceAdultMin(priceAdultMin);
               })
               setHotelList(res.data.data);
-              console.log(res.data.data)
           } catch(err) {
               console.log(err)
           }
@@ -46,16 +47,26 @@ const TourDetail = ({ route, navigation }) => {
     }, []);
 
     const cartItem = useSelector(state =>
-        state.cart.find(item => item.id === id)
+        state.cart?.find(item => item.id === id)
     );
 
     const handleAddToCart = () => {
         dispatch(addToCart({ id, name, price }));
-    };
+    };  
 
     const handleRemoveFromCart = () => {
         dispatch(removeFromCart(id));
     };
+
+    // const data = {
+    //     tourId: this.tourId,
+    //     hotelId: this.hotelDetail.hotel.id,
+    //     customerId: parseInt(customerId),
+    //     numberAdult: this.noParent,
+    //     numberChildren: this.noChildren,
+    //     description: "",
+    //     paymentAmount: paymentAmount,
+    // }
 
     return (
         <View style={{flex: 1}}>
@@ -67,7 +78,7 @@ const TourDetail = ({ route, navigation }) => {
                         source={{uri: 'http://192.168.1.6:8080/home/banner.png'}}
                     />
                     <View>
-                    {
+                    {/* {
                         cartItem ? (
                             <Button
                                 title="Xóa khỏi giỏ hàng"
@@ -79,7 +90,7 @@ const TourDetail = ({ route, navigation }) => {
                                 onPress={handleAddToCart}
                             />
                         )
-                    }
+                    } */}
                     </View>
                     <View style={styles.TourDetail}>
                         <View style={{paddingVertical: 15,}}>
@@ -182,20 +193,38 @@ const TourDetail = ({ route, navigation }) => {
                 </ScrollView> : null
             }
             <View style={styles.navigateBooking}>
-                <Text style={[DefaultStyle.text, styles.text2]}>
-                    <Text style={{width: '100%'}}>Giá từ</Text>
-                    <Text style={{width: '100%'}}>
+                <View style={[DefaultStyle.text, styles.text2]}>
+                    <Text style={{flex: 1, color: '#919191', fontWeight: '500'}}>{`Tổng giá (Bao gồm thuế & phí)`}</Text>
+                    <Text style={{flex: 1}}>
                         <Price active={true} value={55000000}/>
                     </Text>
-                </Text>
+                </View>
                 <Button
-                    title="Tiếp tục"
+                    title="Đặt ngay"
                     style={{backgroundColor: '#E8952F', }}
                     uppercase={false}
-                    onPress={() => navigation.navigate('FormBooking', {
-                        tourId: tourDetail.id,
-                        name: tourDetail.name,
-                    })}
+                    onPress={() => {
+                        const dataBookingTour = {
+                            tourId: tourDetail.id,
+                            hotelId: hotelList[indexRoute]?.id,
+                            customerId: user.id,
+                            numberAdult: 2,
+                            numberChildren: 0,
+                            description: "Đặt tour tại Vinpearl",
+                            paymentAmount: 500000000,
+                            // tourId: this.tourId,
+                            // hotelId: this.hotelDetail.hotel.id,
+                            // customerId: parseInt(customerId),
+                            // numberAdult: this.noParent,
+                            // numberChildren: this.noChildren,
+                            // description: "",
+                            // paymentAmount: paymentAmount,
+                        };
+                        dispatch(addBookingTour(dataBookingTour));
+                        navigation.navigate('SummaryHotel', {
+                          data: dataBookingTour,
+                        });
+                      }}
                 />
             </View>
         </View>

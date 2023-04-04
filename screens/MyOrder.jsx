@@ -66,7 +66,7 @@ const MyOrder = () => {
           try {
             const data = {
                 customerId: user.id,
-                status: typeOfStatus,
+                // status: typeOfServiceId,
                 startTime: route.params?.startTime,
                 endTime: route.params?.endTime,
                 page: 0,
@@ -90,7 +90,7 @@ const MyOrder = () => {
           }
         }
         getListBookingRoom()
-      }, [user.email, render])
+      }, [typeOfServiceId])
   return (
     <View>
         <View style={styles.filter}>
@@ -101,7 +101,6 @@ const MyOrder = () => {
             <TextInput
                 placeholder="Khoảng ngày đặt"
                 leading={() => <AntDesign name="search1" size={24} color="#E3AD46" />}
-                value={nameParam || ""}
             />
             <DropDownPicker
                 open={open}

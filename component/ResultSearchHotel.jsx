@@ -8,7 +8,7 @@ import Price from '../utils/Price';
 
 const ResultSearchHotel = ({ route, navigation }) => {
   /* 2. Get the param */
-    const { siteId, numberPerson } = route.params;
+    const { siteId, checkIn, checkOut, numberAdult, numberChildren } = route.params;
     const [listOfHotel, setListOfHotel] = useState([])
     useEffect(() => {
       const getListOfHotel = async () => {
@@ -40,7 +40,10 @@ const ResultSearchHotel = ({ route, navigation }) => {
                 onPress={() => navigation.navigate('HotelDetail', {
                     hotelId: item.id,
                     hotelName: item.name,
-                    numberPerson: numberPerson,
+                    checkIn: checkIn,
+                    checkOut: checkOut,
+                    numberAdult: numberAdult,
+                    numberChildren: numberChildren,
                 })}
               >
                 <Image 

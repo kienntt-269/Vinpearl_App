@@ -11,9 +11,10 @@ const RangePicker = ({ route, navigation }) => {
     <View style={styles.container}>
       <ScrollView style={{ flex: 1 }}>
         <Calendar
+          disabledBeforeToday={true}
           locale={utils.CUSTOM_LOCALE}
           startDate="2023-03-28"
-          endDate="2023-06-31"
+          endDate="2023-06-30"
           onChange={({ startDate, endDate }) => {
             const numberDay = new Date(endDate).getTime() - new Date(startDate).getTime();
             if (numberDay > 0) {

@@ -56,13 +56,13 @@ const ResultSearchTour = ({ route, navigation }) => {
             <AntDesign style={styles.filter} name="filter" size={20} color="#8C8C90" />
           </TouchableOpacity>
         </View>
-        <View>
+        <View style={{marginBottom: 100, }}>
           {
             listOfTour ? listOfTour.map((item, index) => (
               <TouchableOpacity
                   key={index}
                   style={styles.itemWrapper}
-                  onPress={() => navigation.navigate('TourDetail', {
+                  onPress={() => navigation.navigate('Thông tin chi tiết tour', {
                       itemId: item.id,
                       name: item.name,
                   })}
@@ -88,8 +88,8 @@ const ResultSearchTour = ({ route, navigation }) => {
                       keyExtractor={(item) => item.id}
                     />
                     <View style={styles.boxBottom}>
-                      <View>
-                        <FontAwesome5 style={{marginRight: 5}} name="history" size={24} color="black" />
+                      <View style={{flexDirection: 'row', alignItems: 'center', justifyContent:'flex-start'}}>
+                        <FontAwesome5 style={{marginRight: 5}} name="history" size={10} color="#B0B2B4" />
                         {
                           item.lengthStayId == 1 ? <Text style={[DefaultStyle.text, styles.filter]}>1 ngày</Text> : null
                         }
@@ -115,15 +115,15 @@ const ResultSearchTour = ({ route, navigation }) => {
                           item.lengthStayId == 8 ? <Text style={[DefaultStyle.text, styles.filter]}>22 ngày 21 đêm</Text> : null
                         }
                       </View>
-                      <View style={{marginBottom: 10, flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
-                        <View>
-                          <Feather style={{marginRight: 5}} name="shopping-bag" size={24} color="black" />
+                      <View style={{marginBottom: 10, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
+                        <View style={{flexDirection: 'row', alignItems: 'center', justifyContent:'flex-start'}}>
+                          <Feather style={{marginRight: 5}} name="shopping-bag" size={12} color="#B0B2B4" />
                           <Text style={[DefaultStyle.text, styles.filter]}>
                             {item.numberOfPeople - item.remainingOfPeople} người đã mua
                           </Text>
                         </View>
                         <Text style={[DefaultStyle.text, styles.filter]}>
-                          Chỉ từ
+                          <Text>Chỉ từ  </Text>
                           <Text style={{marginLeft: 6}}>
                             <Price active={true} value={item.priceMin}/>
                           </Text>
@@ -167,6 +167,9 @@ const styles = StyleSheet.create({
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'center',
+      fontSize: 11,
+      color: "#B0B2B4",
+      fontWeight: '700',
     },
     itemWrapper: {
       borderRadius: 12,

@@ -1,11 +1,10 @@
-import { ScrollView, StyleSheet, View, Text , TouchableOpacity, Image, FlatList, TouchableHighlight} from 'react-native'
+import { ScrollView, StyleSheet, View, Text , TouchableOpacity, Image, FlatList, TouchableHighlight, ImageBackground, } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import homeApi from '../api/home/home'
 import { useSelector } from 'react-redux';
 import { selectUser } from '../redux/user/userSlice';
 import { Button } from "@react-native-material/core";
 import { Ionicons, FontAwesome, FontAwesome5, MaterialIcons } from '@expo/vector-icons';
-import Banner from '../component/Banner';
 import Price from '../utils/Price';
 import DefaultStyle from '../theme';
 
@@ -92,7 +91,16 @@ const Home = ({ navigation }) => {
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#fff' }}>
       <ScrollView>
-        <Banner />
+        <ImageBackground source={{uri: 'http://192.168.1.6:8080/home/banner.png'}} resizeMode="cover" style={styles.image}>
+          <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', paddingHorizontal: 20, marginTop: 10, width: '100%'}}>
+            <Text style={[DefaultStyle.text, styles.text]}>
+              <Text>Xin chào, </Text>
+              <Text style={{textTransform: 'uppercase'}}>
+                {user.fullName}
+              </Text>
+            </Text>
+          </View>
+        </ImageBackground>
         <View style={styles.homeSelect}>
           <View style={styles.item}>
             <TouchableHighlight onPress={() => navigation.navigate('SearchHotel')} style={styles.wrapper}>
@@ -153,6 +161,20 @@ const Home = ({ navigation }) => {
 export default Home
 
 const styles = StyleSheet.create({
+  image: {
+    flex: 1,
+    justifyContent: 'center',
+    height: 100,
+    width: '100%',
+    flexDirection: 'row',
+  },
+  text: {
+      color: 'white',
+      fontSize: 18,
+      fontWeight: 'bold',
+      textAlign: 'left',
+      paddingLeft: 5,
+  },
   homeSelect: {
     flex: 1,
     flexDirection: 'row',

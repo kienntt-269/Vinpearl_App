@@ -115,28 +115,6 @@ const Main = () => {
               name='SearchTour'
               component={SearchTour}
               options={{headerShown: false}}
-              // options={{
-              //   title: 'Tìm kiếm tour', //Set Header Title
-              //   headerStyle: {
-              //     flex: 1,
-              //     justifyContent: 'center',
-              //     height: 100,
-              //     width: '100%',
-              //     flexDirection: 'row',
-              //     backgroundColor: "#FFF",
-              //   },
-              //   headerTintColor: '#000', //Set Header text color
-              //   headerTitleStyle: {
-              //     fontWeight: '400', //Set Header text style
-              //   },
-              //   headerTitleAlign: "center",
-              //   headerTitleAlign: "center",
-              //   headerBackground: () => {
-              //       <Image
-              //         source={{ uri: 'http://192.168.1.6:8080/home/banner.png' }}
-              //       />
-              //   }
-              // }}
             />
             <Stack.Screen 
               name='SearchHotel'
@@ -160,11 +138,16 @@ const Main = () => {
               options={{
                 title: 'Tổng kết hành trình', //Set Header Title
                 headerStyle: {
-                  backgroundColor: '#C5C5C5', //Set Header color
+                  flex: 1,
+                  justifyContent: 'center',
+                  height: 100,
+                  width: '100%',
+                  flexDirection: 'row',
+                  backgroundColor: "#FFF",
                 },
-                headerTintColor: '#2B2F34', //Set Header text color
+                headerTintColor: '#000', //Set Header text color
                 headerTitleStyle: {
-                  fontWeight: 'bold', //Set Header text style
+                  fontWeight: '500', //Set Header text style
                 },
                 headerTitleAlign: "center",
                 headerTitleAlign: "center",
@@ -205,7 +188,7 @@ const Main = () => {
               name='ResultSearchHotel'
               component={ResultSearchHotel}
               options={{
-                title: 'Chi tiết khách sạn', //Set Header Title
+                title: 'Danh sách khách sạn', //Set Header Title
                 headerStyle: {
                   backgroundColor: '#C5C5C5', //Set Header color
                 },
@@ -295,7 +278,7 @@ const Main = () => {
               name='PaymentBooking'
               component={PaymentBooking}
               options={{
-                title: 'Thanh toán', //Set Header Title
+                title: 'Hoàn tất đặt phòng', //Set Header Title
                 headerStyle: {
                   backgroundColor: '#C5C5C5', //Set Header color
                 },
@@ -352,7 +335,7 @@ const Main = () => {
               }}
             />
             <Stack.Screen 
-              name='TourDetail'
+              name='Thông tin chi tiết tour'
               component={TourDetail}
               options={({route}) => (
                 {
@@ -365,30 +348,30 @@ const Main = () => {
                     fontWeight: 'bold', //Set Header text style
                   },
                   headerTitleAlign: "center",
-                  headerRight: () => (
-                    <View style={{ marginRight: 10 }}>
-                      <AntDesign name="shoppingcart" size={28} color="#FFF" />
-                      {cartItems.length > 0 && (
-                        <View
-                          style={{
-                            position: 'absolute',
-                            backgroundColor: '#E8952F',
-                            width: 20,
-                            height: 20,
-                            borderRadius: '50%',
-                            top: -6,
-                            right: -5,
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                          }}
-                        >
-                          <Text style={{ color: 'white', fontWeight: 'bold' }}>
-                            {cartItems.length}
-                          </Text>
-                        </View>
-                      )}
-                    </View>
-                  )
+                  // headerRight: () => (
+                  //   <View style={{ marginRight: 10 }}>
+                  //     <AntDesign name="shoppingcart" size={28} color="#FFF" />
+                  //     {cartItems.length > 0 && (
+                  //       <View
+                  //         style={{
+                  //           position: 'absolute',
+                  //           backgroundColor: '#E8952F',
+                  //           width: 20,
+                  //           height: 20,
+                  //           borderRadius: '50%',
+                  //           top: -6,
+                  //           right: -5,
+                  //           justifyContent: 'center',
+                  //           alignItems: 'center',
+                  //         }}
+                  //       >
+                  //         <Text style={{ color: 'white', fontWeight: 'bold' }}>
+                  //           {cartItems.length}
+                  //         </Text>
+                  //       </View>
+                  //     )}
+                  //   </View>
+                  // )
                 }
               )}
             />

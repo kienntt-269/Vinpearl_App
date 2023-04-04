@@ -6,13 +6,23 @@ import homeApi from '../api/home/home';
 import Price from '../utils/Price';
 import { Button } from '@react-native-material/core';
 import { ScrollView } from 'react-native-gesture-handler';
-import { AntDesign } from '@expo/vector-icons';
+import { AntDesign, MaterialIcons } from '@expo/vector-icons';
 import Swiper from 'react-native-swiper'
+import { useDispatch, useSelector } from 'react-redux';
+import { addBookingHotel } from '../redux/customerHotel/customerHotelSlide';
+import { selectUser } from '../redux/user/userSlice';
+import utils from '../utils/utils';
 
 const HotelDetail = ({ route, navigation }) => {
-  const { hotelId, hotelName, numberPerson } = route.params;
+  const dispatch = useDispatch();
+  const user = useSelector(selectUser);
+  const { hotelId, hotelName, checkIn, checkOut, numberAdult, numberChildren } = route.params;
   const [indexShowService, setIndexShowService] = useState(null);
   const [selectServiceIndex, setSelectServiceIndex] = useState(false);
+  const [priceService, setPriceService] = useState(0);
+  const [showPrice, setShowPrice] = useState(false);
+  const [serviceId, setServiceId] = useState(0);
+  const [roomType, setRoomType] = useState(0);
   const [listOfRoomType, setListOfRoomType] = useState([]);
   useEffect(() => {
     const getListOfSuggest = async () => {
@@ -21,10 +31,11 @@ const HotelDetail = ({ route, navigation }) => {
           page: 0,
           size: 10,
           hotelId: hotelId,
-          numberPerson: numberPerson,
+          startTime: checkIn,
+          endTime: checkOut,
+          numberPerson: numberAdult + numberChildren,
         }
           const res = await homeApi.searchRoomType(data);
-          console.log(res.data.data)
           setListOfRoomType(res.data.data.content);
       } catch(err) {
           console.log(err)
@@ -41,8 +52,11 @@ const HotelDetail = ({ route, navigation }) => {
         <Text numberOfLines={1} style={[DefaultStyle.text, styles.footer]}>{hotelName}</Text>
         </View>
         <View style={{flex: 2, borderRightWidth: 1, borderRightColor: '#CCC', alignItems: 'center'}}>
-        <Text style={[DefaultStyle.text, styles.header]}>Ngày</Text>
-        <Text style={[DefaultStyle.text, styles.footer]}>01/04 - 05/04</Text>
+          <Text style={[DefaultStyle.text, styles.header]}>Ngày</Text>
+          <Text style={[DefaultStyle.text, styles.footer]}>
+            {/* 01/04 - 05/04 */}
+            {utils.formattedDate(checkIn).slice(0, 5)} - {utils.formattedDate(checkOut).slice(0, 5)}
+          </Text>
         </View>
         <View style={{flex: 1, borderRightWidth: 1, borderRightColor: '#CCC', alignItems: 'center'}}>
         <Text style={[DefaultStyle.text, styles.header]}>Phòng</Text>
@@ -50,27 +64,44 @@ const HotelDetail = ({ route, navigation }) => {
         </View>
         <View style={{flex: 1, alignItems: 'center'}}>
         <Text style={[DefaultStyle.text, styles.header]}>Khách</Text>
-        <Text style={[DefaultStyle.text, styles.footer]}>2</Text>
+        <Text style={[DefaultStyle.text, styles.footer]}>{numberAdult + numberChildren}</Text>
         </View>
       </View>
-      <View style={styles.navigateBooking}>
-        <View style={[DefaultStyle.text, styles.text2]}>
-            <Text style={{flex: 1}}>{`Tổng giá (Bao gồm thuế & phí)`}</Text>
-            <Text style={{flex: 1}}>
-                <Price active={true} value={55000000}/>
-            </Text>
+      {
+        showPrice && <View style={styles.navigateBooking}>
+          <View style={[DefaultStyle.text, styles.text2]}>
+              <Text style={{flex: 1}}>{`Tổng giá (Bao gồm thuế & phí)`}</Text>
+              <Text style={{flex: 1}}>
+                  <Price active={true} value={priceService * (numberAdult + numberChildren)}/>
+              </Text>
+          </View>
+          <Button
+              title="Đặt phòng"
+              style={{backgroundColor: '#E8952F', }}
+              uppercase={false}
+              onPress={() => {
+                const dataBooking = {
+                  nameHotel: hotelName,
+                  nameRoomType: roomType.name,
+                  checkIn: checkIn,
+                  checkOut: checkOut,
+                  customerId: user.id,
+                  roomTypeId: roomType.id,
+                  serviceId: serviceId,
+                  hotelId: hotelId,
+                  numberAdult: numberAdult,
+                  numberChildren: numberChildren,
+                  description: "Đặt hàng tại Vinpearl",
+                  paymentAmount: priceService * (numberAdult + numberChildren),
+                };
+                dispatch(addBookingHotel(dataBooking));
+                navigation.navigate('SummaryHotel', {
+                  data: dataBooking,
+                });
+              }}
+          />
         </View>
-        <Button
-            title="Đặt phòng"
-            style={{backgroundColor: '#E8952F', }}
-            uppercase={false}
-            onPress={() => navigation.navigate('SummaryHotel', {
-                serviceId: 1,
-                roomTypeId: 1,
-                name: "name",
-            })}
-        />
-      </View>
+      }
       <ScrollView>
         <Text style={[DefaultStyle.text, styles.numberRoom]}>
           Phòng 1
@@ -106,6 +137,10 @@ const HotelDetail = ({ route, navigation }) => {
                         {
                           setIndexShowService(index);
                           setSelectServiceIndex(0);
+                          setShowPrice(true);
+                          setPriceService(item.service[0].price);
+                          setServiceId(item.service[0].id);
+                          setRoomType(item)
                         }
                       }
                       uppercase={false}
@@ -120,14 +155,24 @@ const HotelDetail = ({ route, navigation }) => {
                       <TouchableOpacity
                         style={selectServiceIndex == indexService ? styles.radioButtonActive : styles.radioButton}
                         key={indexService}
-                        onPress={() =>
-                          setSelectServiceIndex(indexService)
+                        onPress={() => {
+                            setSelectServiceIndex(indexService);
+                            setPriceService(itemService.price);
+                            setServiceId(itemService.id);
+                          }
                         }
                       >
-                        <Text style={[DefaultStyle.text, styles.nameService]}>{itemService.name}</Text>
-                        {
-                          console.log(itemService.contents)
-                        }
+                        <View style={{flexDirection: 'row'}}>
+                          {
+                            selectServiceIndex == indexService && <MaterialIcons name="radio-button-on" size={24} color="#E8952F" />
+                          }
+                          {
+                            selectServiceIndex != indexService && <MaterialIcons name="radio-button-off" size={24} color="#CCC" />
+                          }
+                          <Text style={[DefaultStyle.text, styles.nameService]}>
+                            {itemService.name}
+                          </Text>
+                        </View>
                         { 
                           itemService?.contents ? itemService.contents.map((itemContents, indexContents) => (
                             <View key={indexContents}>
@@ -162,24 +207,6 @@ const HotelDetail = ({ route, navigation }) => {
           )) : null
         }
       </ScrollView>
-      {/* <View style={styles.navigateBooking}>
-        <Text style={[DefaultStyle.text, styles.text2]}>
-            <Text style={{width: '100%'}}>{`Tổng giá (Bao gồm thuế & phí)`}</Text>
-            <Text style={{width: '100%'}}>
-                <Price active={true} value={55000000}/>
-            </Text>
-        </Text>
-        <Button
-            title="Đặt phòng"
-            style={{backgroundColor: '#E8952F', }}
-            uppercase={false}
-            onPress={() => navigation.navigate('SummaryHotel', {
-                serviceId: 1,
-                roomTypeId: 1,
-                name: "name",
-            })}
-        />
-      </View> */}
     </View>
   )
 }
@@ -245,6 +272,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     color: '#000',
     marginBottom: 8,
+    marginLeft: 10,
   },
   price: {
     fontSize: 14,

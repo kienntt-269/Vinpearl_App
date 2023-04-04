@@ -20,6 +20,7 @@ import DefaultStyle from "../theme";
 import { useForm, Controller } from "react-hook-form";
 import utils from "../utils/utils";
 import { AntDesign } from "@expo/vector-icons";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Login = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -48,6 +49,8 @@ const Login = ({ navigation }) => {
       setIsLogin(res.data.code === 200);
 
       if (res.data.code === 200) {
+        // Lưu token vào AsyncStorage
+        await AsyncStorage.setItem(utils.CONSTANTS.TOKEN, res.data.data.token);
         navigation.navigate("Auth");
         dispatch(
           login({

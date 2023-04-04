@@ -58,15 +58,20 @@ const REGEX = {
   password: "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,30}$/",
 }
 
+const CONSTANTS = {
+  TOKEN: "19a407b3-d7ca-481b-afbf-1f135902ce9c",
+}
+
 function formattedDate (dateParam) {
   const date = new Date(dateParam);
   const formattedDate = `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getFullYear().toString()}`;
-  console.log(formattedDate);
+  return formattedDate;
 } 
 
 export default {
   CUSTOM_LOCALE: CUSTOM_LOCALE,
   REGEX: REGEX,
+  CONSTANTS: CONSTANTS,
   getDay: getDay,
   formattedDate: formattedDate,
 }
