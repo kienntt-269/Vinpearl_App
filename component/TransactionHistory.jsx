@@ -5,7 +5,6 @@ import { selectUser } from '../redux/user/userSlice';
 import homeApi from '../api/home/home';
 import { FlatList } from 'react-native';
 import DatePicker from 'react-native-datepicker';
-import { Picker } from '@react-native-picker/picker';
 
 const TransactionHistory = ({navigation}) => {
   const user = useSelector(selectUser);
@@ -67,7 +66,7 @@ const TransactionHistory = ({navigation}) => {
     <ScrollView style={{backgroundColor: '#fff'}}>
         <View>
           <View>
-            <Picker
+            {/* <Picker
               selectedValue={statusTour}
               onValueChange={(itemValue, itemIndex) => setStatusTour(itemValue)}
             >
@@ -76,7 +75,7 @@ const TransactionHistory = ({navigation}) => {
               <Picker.Item label="Đã xác nhận" value="confirmed" />
               <Picker.Item label="Hoàn thành" value="completed" />
               <Picker.Item label="Đã hủy" value="cancelled" />
-            </Picker>
+            </Picker> */}
           </View>
           <View>
             <DatePicker

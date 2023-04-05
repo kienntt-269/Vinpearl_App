@@ -10,6 +10,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addToCart, removeFromCart  } from '../redux/tour-cart/cartItemsSlide';
 import { addBookingTour } from '../redux/customerTour/customerTourSlide';
 import { selectUser } from '../redux/user/userSlice';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import utils from '../utils/utils';
 
 const TourDetail = ({ route, navigation }) => {
     const dispatch = useDispatch();
@@ -25,6 +27,9 @@ const TourDetail = ({ route, navigation }) => {
     const [tourDetail, setTourDetail] = useState({});
     const [hotelList, setHotelList] = useState([]);
     const [priceAdultMin, setPriceAdultMin] = useState(0);
+    const [priceAdultSelect, setPriceAdultSelect] = useState(0);
+    const [priceChildrenSelect, setPriceChildrenSelect] = useState(0);
+    const customerId = AsyncStorage.getItem(utils.CONSTANTS.TOKEN);
     useEffect(() => {
         const getListOfSuggest = async () => {
           try {
@@ -58,16 +63,6 @@ const TourDetail = ({ route, navigation }) => {
         dispatch(removeFromCart(id));
     };
 
-    // const data = {
-    //     tourId: this.tourId,
-    //     hotelId: this.hotelDetail.hotel.id,
-    //     customerId: parseInt(customerId),
-    //     numberAdult: this.noParent,
-    //     numberChildren: this.noChildren,
-    //     description: "",
-    //     paymentAmount: paymentAmount,
-    // }
-
     return (
         <View style={{flex: 1}}>
             {
@@ -75,7 +70,7 @@ const TourDetail = ({ route, navigation }) => {
                 <ScrollView style={{backgroundColor: '#FFF'}}>
                     <Image 
                         style={{height: 224, width: '100%', borderBottomLeftRadius: 8, borderBottomRightRadius: 8}}
-                        source={{uri: 'http://192.168.1.6:8080/home/banner.png'}}
+                        source={{uri: 'http://192.168.1.6:8080/images/home/banner.png'}}
                     />
                     <View>
                     {/* {
@@ -94,10 +89,10 @@ const TourDetail = ({ route, navigation }) => {
                     </View>
                     <View style={styles.TourDetail}>
                         <View style={{paddingVertical: 15,}}>
-                            <Text style={[DefaultStyle.text, styles.title]}>HCM - Phú quốc Mayfest Combo</Text>
+                            <Text style={[DefaultStyle.text, styles.title]}>{tourDetail?.name}</Text>
                             <View style={styles.code}>
                                 <Text style={[DefaultStyle.text, {color: '#9B9B9B'}]}>Mã sản phẩm: </Text>
-                                <Text style={[DefaultStyle.text, {color: '#818181', fontWeight: '700',}]}>GN00666</Text>
+                                <Text style={[DefaultStyle.text, {color: '#818181', fontWeight: '700',}]}>{tourDetail?.code || 'GN00666'}</Text>
                             </View>
                             <View style={styles.price}>
                                 <Text style={[DefaultStyle.text, {marginRight: 5}]}>Chỉ từ</Text>
@@ -141,6 +136,8 @@ const TourDetail = ({ route, navigation }) => {
                                             key={index}
                                             onPress={() => {
                                                 setIndexRoute(index);
+                                                setPriceAdultSelect(item.priceAdult);
+                                                setPriceChildrenSelect(item.priceChildren);
                                             }}
                                         >
                                             <Text style={[DefaultStyle.text, indexRoute == index ? styles.textFirstActive : styles.textFirst]}>Combo 3D2N tại {item.hotel.name}</Text>
@@ -196,7 +193,7 @@ const TourDetail = ({ route, navigation }) => {
                 <View style={[DefaultStyle.text, styles.text2]}>
                     <Text style={{flex: 1, color: '#919191', fontWeight: '500'}}>{`Tổng giá (Bao gồm thuế & phí)`}</Text>
                     <Text style={{flex: 1}}>
-                        <Price active={true} value={55000000}/>
+                        <Price active={true} value={priceAdultSelect * 2 + priceChildrenSelect * 2}/>
                     </Text>
                 </View>
                 <Button
@@ -206,19 +203,14 @@ const TourDetail = ({ route, navigation }) => {
                     onPress={() => {
                         const dataBookingTour = {
                             tourId: tourDetail.id,
+                            tourName: tourDetail.name,
                             hotelId: hotelList[indexRoute]?.id,
-                            customerId: user.id,
+                            hotelName: hotelList[indexRoute]?.name,
+                            customerId: user.id || customerId,
                             numberAdult: 2,
-                            numberChildren: 0,
+                            numberChildren: 2,
                             description: "Đặt tour tại Vinpearl",
-                            paymentAmount: 500000000,
-                            // tourId: this.tourId,
-                            // hotelId: this.hotelDetail.hotel.id,
-                            // customerId: parseInt(customerId),
-                            // numberAdult: this.noParent,
-                            // numberChildren: this.noChildren,
-                            // description: "",
-                            // paymentAmount: paymentAmount,
+                            paymentAmount: priceAdultSelect * 2 + priceChildrenSelect * 2,
                         };
                         dispatch(addBookingTour(dataBookingTour));
                         navigation.navigate('SummaryHotel', {

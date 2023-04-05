@@ -1,6 +1,6 @@
 import react from 'react';
-import { StyleSheet } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
+import { StyleSheet, TouchableOpacity } from 'react-native';
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import store from './redux/store';
@@ -39,12 +39,15 @@ import PaymentBooking from './component/PaymentBooking';
 import MyOrder from './screens/MyOrder';
 import { AntDesign } from '@expo/vector-icons';
 import { View, Text } from 'react-native';
+import SelectPeople from './component/SelectPeople';
+import FilterOrder from './component/FilterOrder';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
 const Auth = () => {
   const user = useSelector(selectUser);
+  const navigation = useNavigation();
   return (
     <Tab.Navigator
       initialRouteName="Auth"
@@ -77,7 +80,29 @@ const Auth = () => {
     <Tab.Screen
         name="Đơn hàng"
         component={MyOrder}
-        options={{headerShown: false}}
+        options={{
+          title: 'Đơn hàng của tôi', //Set Header Title
+          headerStyle: {
+            flex: 1,
+            justifyContent: 'center',
+            height: 100,
+            width: '100%',
+            flexDirection: 'row',
+            backgroundColor: "#FFF",
+          },
+          headerTintColor: '#2B2F34', //Set Header text color
+          headerTitleStyle: {
+            fontWeight: 'bold', //Set Header text style
+          },
+          headerTitleAlign: "center",
+          headerRight: () => (
+            <View
+              style={{ marginRight: 10 }}
+            >
+                <AntDesign onPress={() => navigation.navigate("FilterOrder")} name="menu-fold" size={24} color="black" />
+            </View>
+          )
+        }}
     />
     <Tab.Screen
         name="Tài khoản"
@@ -122,7 +147,54 @@ const Main = () => {
               options={{
                 title: 'Tìm khách sạn', //Set Header Title
                 headerStyle: {
-                  backgroundColor: '#C5C5C5', //Set Header color
+                  flex: 1,
+                  justifyContent: 'center',
+                  height: 100,
+                  width: '100%',
+                  flexDirection: 'row',
+                  backgroundColor: "#FFF",
+                },
+                headerTintColor: '#2B2F34', //Set Header text color
+                headerTitleStyle: {
+                  fontWeight: 'bold', //Set Header text style
+                },
+                headerTitleAlign: "center",
+                headerTitleAlign: "center",
+              }}
+            />
+            <Stack.Screen 
+              name='SelectPeople'
+              component={SelectPeople}
+              options={{
+                title: 'Chọn số lượng người', //Set Header Title
+                headerStyle: {
+                  flex: 1,
+                  justifyContent: 'center',
+                  height: 100,
+                  width: '100%',
+                  flexDirection: 'row',
+                  backgroundColor: "#FFF",
+                },
+                headerTintColor: '#2B2F34', //Set Header text color
+                headerTitleStyle: {
+                  fontWeight: 'bold', //Set Header text style
+                },
+                headerTitleAlign: "center",
+                headerTitleAlign: "center",
+              }}
+            />
+            <Stack.Screen 
+              name='FilterOrder'
+              component={FilterOrder}
+              options={{
+                title: 'Bộ lọc', //Set Header Title
+                headerStyle: {
+                  flex: 1,
+                  justifyContent: 'center',
+                  height: 100,
+                  width: '100%',
+                  flexDirection: 'row',
+                  backgroundColor: "#FFF",
                 },
                 headerTintColor: '#2B2F34', //Set Header text color
                 headerTitleStyle: {
@@ -159,7 +231,12 @@ const Main = () => {
               options={{
                 title: 'Chọn ngày', //Set Header Title
                 headerStyle: {
-                  backgroundColor: '#C5C5C5', //Set Header color
+                  flex: 1,
+                  justifyContent: 'center',
+                  height: 100,
+                  width: '100%',
+                  flexDirection: 'row',
+                  backgroundColor: "#FFF",
                 },
                 headerTintColor: '#2B2F34', //Set Header text color
                 headerTitleStyle: {
@@ -175,7 +252,12 @@ const Main = () => {
               options={{
                 title: 'Bộ lọc & Sắp xếp', //Set Header Title
                 headerStyle: {
-                  backgroundColor: '#C5C5C5', //Set Header color
+                  flex: 1,
+                  justifyContent: 'center',
+                  height: 100,
+                  width: '100%',
+                  flexDirection: 'row',
+                  backgroundColor: "#FFF",
                 },
                 headerTintColor: '#2B2F34', //Set Header text color
                 headerTitleStyle: {
@@ -190,7 +272,12 @@ const Main = () => {
               options={{
                 title: 'Danh sách khách sạn', //Set Header Title
                 headerStyle: {
-                  backgroundColor: '#C5C5C5', //Set Header color
+                  flex: 1,
+                  justifyContent: 'center',
+                  height: 100,
+                  width: '100%',
+                  flexDirection: 'row',
+                  backgroundColor: "#FFF",
                 },
                 headerTintColor: '#2B2F34', //Set Header text color
                 headerTitleStyle: {
@@ -205,7 +292,12 @@ const Main = () => {
               options={{
                 title: 'Danh sách phòng', //Set Header Title
                 headerStyle: {
-                  backgroundColor: '#C5C5C5', //Set Header color
+                  flex: 1,
+                  justifyContent: 'center',
+                  height: 100,
+                  width: '100%',
+                  flexDirection: 'row',
+                  backgroundColor: "#FFF",
                 },
                 headerTintColor: '#2B2F34', //Set Header text color
                 headerTitleStyle: {
@@ -220,7 +312,12 @@ const Main = () => {
               options={{
                 title: 'Danh sách tour', //Set Header Title
                 headerStyle: {
-                  backgroundColor: '#C5C5C5', //Set Header color
+                  flex: 1,
+                  justifyContent: 'center',
+                  height: 100,
+                  width: '100%',
+                  flexDirection: 'row',
+                  backgroundColor: "#FFF",
                 },
                 headerTintColor: '#2B2F34', //Set Header text color
                 headerTitleStyle: {
@@ -235,7 +332,12 @@ const Main = () => {
               options={{
                 title: 'Thông tin cá nhân', //Set Header Title
                 headerStyle: {
-                  backgroundColor: '#C5C5C5', //Set Header color
+                  flex: 1,
+                  justifyContent: 'center',
+                  height: 100,
+                  width: '100%',
+                  flexDirection: 'row',
+                  backgroundColor: "#FFF",
                 },
                 headerTintColor: '#2B2F34', //Set Header text color
                 headerTitleStyle: {
@@ -250,7 +352,12 @@ const Main = () => {
               options={{
                 title: 'Chi tiết bài viết', //Set Header Title
                 headerStyle: {
-                  backgroundColor: '#C5C5C5', //Set Header color
+                  flex: 1,
+                  justifyContent: 'center',
+                  height: 100,
+                  width: '100%',
+                  flexDirection: 'row',
+                  backgroundColor: "#FFF",
                 },
                 headerTintColor: '#2B2F34', //Set Header text color
                 headerTitleStyle: {
@@ -265,7 +372,12 @@ const Main = () => {
               options={{
                 title: 'Thông tin người đặt', //Set Header Title
                 headerStyle: {
-                  backgroundColor: '#C5C5C5', //Set Header color
+                  flex: 1,
+                  justifyContent: 'center',
+                  height: 100,
+                  width: '100%',
+                  flexDirection: 'row',
+                  backgroundColor: "#FFF",
                 },
                 headerTintColor: '#2B2F34', //Set Header text color
                 headerTitleStyle: {
@@ -280,7 +392,12 @@ const Main = () => {
               options={{
                 title: 'Hoàn tất đặt phòng', //Set Header Title
                 headerStyle: {
-                  backgroundColor: '#C5C5C5', //Set Header color
+                  flex: 1,
+                  justifyContent: 'center',
+                  height: 100,
+                  width: '100%',
+                  flexDirection: 'row',
+                  backgroundColor: "#FFF",
                 },
                 headerTintColor: '#2B2F34', //Set Header text color
                 headerTitleStyle: {
@@ -295,7 +412,12 @@ const Main = () => {
               options={{
                 title: 'Xác nhận', //Set Header Title
                 headerStyle: {
-                  backgroundColor: '#C5C5C5', //Set Header color
+                  flex: 1,
+                  justifyContent: 'center',
+                  height: 100,
+                  width: '100%',
+                  flexDirection: 'row',
+                  backgroundColor: "#FFF",
                 },
                 headerTintColor: '#2B2F34', //Set Header text color
                 headerTitleStyle: {
@@ -310,7 +432,12 @@ const Main = () => {
               options={{
                 title: 'Lịch sử giao dịch', //Set Header Title
                 headerStyle: {
-                  backgroundColor: '#C5C5C5', //Set Header color
+                  flex: 1,
+                  justifyContent: 'center',
+                  height: 100,
+                  width: '100%',
+                  flexDirection: 'row',
+                  backgroundColor: "#FFF",
                 },
                 headerTintColor: '#2B2F34', //Set Header text color
                 headerTitleStyle: {
@@ -325,7 +452,12 @@ const Main = () => {
               options={{
                 title: 'Giỏ hàng', //Set Header Title
                 headerStyle: {
-                  backgroundColor: '#C5C5C5', //Set Header color
+                  flex: 1,
+                  justifyContent: 'center',
+                  height: 100,
+                  width: '100%',
+                  flexDirection: 'row',
+                  backgroundColor: "#FFF",
                 },
                 headerTintColor: '#2B2F34', //Set Header text color
                 headerTitleStyle: {
@@ -415,7 +547,12 @@ const Main = () => {
               options={{
                 title: 'Đơn hàng mới', //Set Header Title
                 headerStyle: {
-                  backgroundColor: '#C5C5C5', //Set Header color
+                  flex: 1,
+                  justifyContent: 'center',
+                  height: 100,
+                  width: '100%',
+                  flexDirection: 'row',
+                  backgroundColor: "#FFF",
                 },
                 headerTintColor: '#2B2F34', //Set Header text color
                 headerTitleStyle: {

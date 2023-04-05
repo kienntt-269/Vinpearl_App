@@ -91,7 +91,7 @@ const Home = ({ navigation }) => {
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#fff' }}>
       <ScrollView>
-        <ImageBackground source={{uri: 'http://192.168.1.6:8080/home/banner.png'}} resizeMode="cover" style={styles.image}>
+        <ImageBackground source={{uri: 'http://192.168.1.6:8080/images/home/banner.png'}} resizeMode="cover" style={styles.image}>
           <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', paddingHorizontal: 20, marginTop: 10, width: '100%'}}>
             <Text style={[DefaultStyle.text, styles.text]}>
               <Text>Xin chào, </Text>

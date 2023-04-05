@@ -51,6 +51,7 @@ const Login = ({ navigation }) => {
       if (res.data.code === 200) {
         // Lưu token vào AsyncStorage
         await AsyncStorage.setItem(utils.CONSTANTS.TOKEN, res.data.data.token);
+        await AsyncStorage.setItem(utils.CONSTANTS.CUSTOMER_ID, res.data.data.id);
         navigation.navigate("Auth");
         dispatch(
           login({
@@ -92,7 +93,7 @@ const Login = ({ navigation }) => {
         <Image
           style={{ width: 120, height: 120, resizeMode: "contain" }}
           source={{
-            uri: "http://192.168.1.6:8080/home/logo/vinpearl-logo.png",
+            uri: "http://192.168.1.6:8080/images/home/logo/vinpearl-logo.png",
           }}
         />
       </View>
@@ -177,12 +178,12 @@ const Login = ({ navigation }) => {
             name="password"
             rules={{
               required: true,
-              pattern: {
-                value:
-                  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,30}$/,
-                message:
-                  "Mật khẩu phải chứa chữ hoa, chữ thường, số và ký tự đặc biệt và có độ dài từ 8 đến 30 ký tự",
-              },
+              // pattern: {
+              //   value:
+              //     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,30}$/,
+              //   message:
+              //     "Mật khẩu phải chứa chữ hoa, chữ thường, số và ký tự đặc biệt và có độ dài từ 8 đến 30 ký tự",
+              // },
             }}
             render={({ field: { onChange, onBlur, value } }) => (
               <TextInput
@@ -216,11 +217,11 @@ const Login = ({ navigation }) => {
               Vui lòng nhập mật khẩu
             </Text>
           )}
-          {errors.password && errors.password.type == "pattern" && (
+          {/* {errors.password && errors.password.type == "pattern" && (
             <Text style={[DefaultStyle.text, styles.error]}>
               {errors.password.message}
             </Text>
-          )}
+          )} */}
         </View>
         <TouchableOpacity
           style={styles.button}

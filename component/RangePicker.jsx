@@ -7,14 +7,18 @@ import utils from '../utils/utils';
 const RangePicker = ({ route, navigation }) => {
   const [dayDiff, setDayDiff] = useState(2);
   const [rangeDate, setRangeDate] = useState([]);
+  const { startDate, endDate, } = route.params;
   return (
     <View style={styles.container}>
       <ScrollView style={{ flex: 1 }}>
         <Calendar
+          isMonthFirst={true}
+          pastYearRange={0}
+          futureYearRange={1}
           disabledBeforeToday={true}
           locale={utils.CUSTOM_LOCALE}
-          startDate="2023-03-28"
-          endDate="2023-06-30"
+          startDate={utils.formattedDate2(startDate)}
+          endDate={utils.formattedDate2(endDate)}
           onChange={({ startDate, endDate }) => {
             const numberDay = new Date(endDate).getTime() - new Date(startDate).getTime();
             if (numberDay > 0) {
@@ -29,8 +33,8 @@ const RangePicker = ({ route, navigation }) => {
       <Button
         onPress={() =>
             navigation.navigate("SearchHotel", {
-              startTime: new Date(rangeDate[0]),
-              endTime: new Date(rangeDate[1]),
+              startTime: new Date(rangeDate[0]).getTime(),
+              endTime: new Date(rangeDate[1]).getTime(),
             })
         }
         title={`Xác nhận ${dayDiff} đêm`}

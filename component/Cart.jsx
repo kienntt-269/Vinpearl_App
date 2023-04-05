@@ -27,9 +27,9 @@ const Cart = () => {
   }, [user.email,currentId, render]);
 
   const [cartItems, setCartItems] = useState([
-    { id: 1, name: 'Tour A', image: 'http://192.168.1.6:8080/home/banner.png', price: 50 },
-    { id: 2, name: 'Tour B', image: 'http://192.168.1.6:8080/home/banner.png', price: 70 },
-    { id: 3, name: 'Tour C', image: 'http://192.168.1.6:8080/home/banner.png', price: 80 },
+    { id: 1, name: 'Tour A', image: 'http://192.168.1.6:8080/images/home/banner.png', price: 50 },
+    { id: 2, name: 'Tour B', image: 'http://192.168.1.6:8080/images/home/banner.png', price: 70 },
+    { id: 3, name: 'Tour C', image: 'http://192.168.1.6:8080/images/home/banner.png', price: 80 },
   ]);
 
   const totalPrice = cartItems.reduce((sum, item) => sum + item.price, 0);
@@ -37,7 +37,7 @@ const Cart = () => {
   const renderItem = ({ item }) => (
     <View style={styles.item}>
       <Image
-        source={{ uri: 'http://192.168.1.6:8080/home/banner.png' }}
+        source={{ uri: 'http://192.168.1.6:8080/images/home/banner.png' }}
         style={styles.image} 
       />
       <View style={styles.itemDetails}>

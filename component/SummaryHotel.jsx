@@ -81,30 +81,14 @@ const SummaryHotel = ({ route, navigation }) => {
                         <FontAwesome5 name="hotel" size={24} color="#E8952F" />
                         Thông tin tour
                     </Text>
+                    <Text style={[DefaultStyle.text, styles.nameHotel]}>{bookingTourDetail?.tourName}</Text>
                     <View>
                         <Text style={[DefaultStyle.text, styles.nameHotel]}>
-                            {bookingHotelDetail?.nameHotel}
+                            {bookingTourDetail?.hotelName}
                         </Text>
                         <Text style={[DefaultStyle.text, styles.desc]}>
-                            {/* 29/03/2023 - 30/03/2023 (1 đêm) */}
-                            {utils.formattedDate(bookingHotelDetail?.checkIn)} - {utils.formattedDate(bookingHotelDetail?.checkOut)} ({Math.round((bookingHotelDetail.checkOut - bookingHotelDetail.checkIn) / 86400000)} đêm)
+                            Người lớn / Trẻ em: {bookingTourDetail.numberAdult} / {bookingTourDetail.numberChildren}
                         </Text>
-                        <Text style={[DefaultStyle.text, styles.desc]}>
-                            Người lớn / Trẻ em: {bookingHotelDetail.numberAdult} / {bookingHotelDetail.numberChildren}
-                        </Text>
-                    </View>
-                </View>
-                <View style={styles.infoRoom}>
-                    <Text style={[DefaultStyle.text, styles.title]}>
-                        <Ionicons name="bed-outline" size={24} color="#E8952F" />
-                        Thông tin phòng
-                    </Text>
-                    <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
-                        <View style={{flex: 1}}>
-                            <Text style={[DefaultStyle.text, styles.nameRoom, {fontWeight: '700'}]}>Phòng 1: </Text>
-                            <Text numberOfLines={1} style={[DefaultStyle.text, styles.nameRoom]}>{bookingHotelDetail.nameRoomType}</Text>
-                        </View>
-                        <Price value={bookingHotelDetail.paymentAmount}/>
                     </View>
                 </View>
                 <View style={styles.total}>
@@ -112,13 +96,13 @@ const SummaryHotel = ({ route, navigation }) => {
                         <Text style={{fontSize: 14, fontWeight: '600'}}>Tổng cộng</Text>
                         <Text style={{fontSize: 12, fontWeight: '400', color: '#CCC'}}>Giá đã bao gồm thuế và phí</Text>    
                     </View>
-                    <Price active={true} value={bookingHotelDetail.paymentAmount}/>
+                    <Price active={true} value={bookingTourDetail.paymentAmount}/>
                 </View>
                 <View style={styles.navigateBooking}>
                     <View style={[DefaultStyle.text, styles.text2]}>
                         <Text style={{flex: 1, fontWeight: '600'}}>{`Tổng giá (Bao gồm thuế & phí)`}</Text>
                         <Text style={{flex: 1}}>
-                            <Price active={true} value={bookingHotelDetail.paymentAmount}/>
+                            <Price active={true} value={bookingTourDetail.paymentAmount}/>
                         </Text>
                     </View>
                     <Button

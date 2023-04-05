@@ -178,16 +178,16 @@ const HotelDetail = ({ route, navigation }) => {
                             <View key={indexContents}>
                               <View>
                                 {
-                                  itemContents?.name && itemContents?.name.includes('Bữa') ? <Image source={{uri: "http://192.168.1.6:8080/home/icon/b2abe8b0f56e45faa5d21e96c62e6922_MealPlan.png"}}/> : null
+                                  itemContents?.name && itemContents?.name.includes('Bữa') ? <Image source={{uri: "http://192.168.1.6:8080/images/home/icon/b2abe8b0f56e45faa5d21e96c62e6922_MealPlan.png"}}/> : null
                                 }
                                 {
-                                  itemContents?.name && itemContents?.name.includes('Voucher Grandworld') ? <Image source={{uri: "http://192.168.1.6:8080/home/icon/54a5a905d08047a1b9f3e81e4e99b089_Hotel Dis- Credit.png"}}/> : null
+                                  itemContents?.name && itemContents?.name.includes('Voucher Grandworld') ? <Image source={{uri: "http://192.168.1.6:8080/images/home/icon/54a5a905d08047a1b9f3e81e4e99b089_Hotel Dis- Credit.png"}}/> : null
                                 }
                                 {
-                                  itemContents?.name && itemContents?.name.includes('hoàn/ hủy') ? <Image source={{uri: "http://192.168.1.6:8080/home/icon/calendar-cancel.b2f8a00d.png"}}/> : null
+                                  itemContents?.name && itemContents?.name.includes('hoàn/ hủy') ? <Image source={{uri: "http://192.168.1.6:8080/images/home/icon/calendar-cancel.b2f8a00d.png"}}/> : null
                                 }
                                 {
-                                  itemContents?.name && itemContents?.name.includes('Vé') ? <Image source={{uri: "http://192.168.1.6:8080/home/icon/e911ab39130e4ebabec800ac3af34b30_Vinwonder.png"}}/> : null
+                                  itemContents?.name && itemContents?.name.includes('Vé') ? <Image source={{uri: "http://192.168.1.6:8080/images/home/icon/e911ab39130e4ebabec800ac3af34b30_Vinwonder.png"}}/> : null
                                 }
                                 <Text numberOfLines={1} style={styles.nameContents}>{itemContents.name}</Text>
                               </View>

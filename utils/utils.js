@@ -60,13 +60,22 @@ const REGEX = {
 
 const CONSTANTS = {
   TOKEN: "19a407b3-d7ca-481b-afbf-1f135902ce9c",
+  CUSTOMER_ID: "1f135902ce9c-19a407b3-d7ca-481b-afbf",
 }
 
 function formattedDate (dateParam) {
   const date = new Date(dateParam);
   const formattedDate = `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getFullYear().toString()}`;
   return formattedDate;
-} 
+};
+
+function formattedDate2 (timestamp) {
+  var date = new Date(timestamp);
+  var year = date.getFullYear();
+  var month = ('0' + (date.getMonth() + 1)).slice(-2);
+  var day = ('0' + date.getDate()).slice(-2);
+  return year + '-' + month + '-' + day;
+}
 
 export default {
   CUSTOM_LOCALE: CUSTOM_LOCALE,
@@ -74,4 +83,5 @@ export default {
   CONSTANTS: CONSTANTS,
   getDay: getDay,
   formattedDate: formattedDate,
+  formattedDate2: formattedDate2,
 }

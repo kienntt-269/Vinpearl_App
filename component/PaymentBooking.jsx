@@ -11,6 +11,7 @@ import { useNavigation } from "@react-navigation/native";
 const PaymentBooking = () => {
     const navigation = useNavigation();
     const bookingHotelDetail = useSelector(state => state.customerHotel.booking);
+    const bookingTourDetail = useSelector(state => state.customerTour.booking);
     const [url, setUrl] = useState(null);
     const [isPaymentSuccess, setIsPaymentSuccess] = useState(0);
     useEffect(() => {
