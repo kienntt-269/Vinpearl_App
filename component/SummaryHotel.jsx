@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-around',
         alignItems: 'center',
-        position: 'absolute',
+        // position: 'absolute',
         bottom: 0,
         width: '100%',
         backgroundColor: '#FFFFFF',

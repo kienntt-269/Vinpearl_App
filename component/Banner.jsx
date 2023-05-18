@@ -6,7 +6,7 @@ import DefaultStyle from '../theme';
 import { AntDesign, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
-const banner = {uri: 'http://192.168.1.6:8080/images/home/banner.png'};
+const banner = {uri: 'http://192.168.1.11:8080/images/home/banner.png'};
 
 const Banner = () => {
     const user = useSelector(selectUser);

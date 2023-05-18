@@ -139,18 +139,18 @@ const FilterOrder = () => {
                         numColumns={2}
                     />
                 </View>
+                <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', width: '100%', marginVertical: 15, borderTopColor: '#CCC', borderTopWidth: 0.25, paddingVertical: 20, paddingHorizontal: 20}}>
+                    <Text style={[DefaultStyle.text, styles.clear]}>Xóa lọc</Text>
+                    <Text
+                        style={[DefaultStyle.text, styles.btnFilter]}
+                        onPress={() => navigation.navigate('Đơn hàng', {
+                            time: indexTime,
+                            serviceId: indexService,
+                            sTatusId: indexStatus,
+                        })}
+                    >Lọc kết quả</Text>
+                </View>
             </ScrollView>
-            <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', width: '100%', marginVertical: 15, borderTopColor: '#CCC', borderTopWidth: 0.25, position: 'absolute', bottom: 20, paddingVertical: 20, paddingHorizontal: 20}}>
-                <Text style={[DefaultStyle.text, styles.clear]}>Xóa lọc</Text>
-                <Text
-                    style={[DefaultStyle.text, styles.btnFilter]}
-                    onPress={() => navigation.navigate('Đơn hàng', {
-                        time: indexTime,
-                        serviceId: indexService,
-                        sTatusId: indexStatus,
-                    })}
-                >Lọc kết quả</Text>
-            </View>
         </View>
     </View>
   )

@@ -39,7 +39,15 @@ const K_OPTIONS_USER = [
 ]
 
 const Item = ({icon, title, navigation, optionNavigate }) => (
-  <TouchableOpacity onPress={() => navigation.navigate(optionNavigate)}>
+  <TouchableOpacity onPress={() => {
+    if (icon === 'building') {
+      navigation.navigate(optionNavigate, {
+        siteId: "",
+      })
+    } else {
+      navigation.navigate(optionNavigate)
+    }
+  }}>
     <View style={styles.item}>
       <View style={{marginRight: 20}}>
         <FontAwesome name={icon} size={20} color="black" />
