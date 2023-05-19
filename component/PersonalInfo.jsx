@@ -22,6 +22,12 @@ const PersonalInfo = () => {
       try {
           const res = await accountApi.detail(user.id);
           setCustomerDetail(res.data.data);
+
+          setValue('fullName', res.data.data.fullName);
+          setValue('gender', res.data.data.sex);
+          setValue('email', res.data.data.email);
+          setValue('phone', res.data.data.phone);
+          setValue('cccd', res.data.data.cccd);
       } catch(err) {
           console.log(err)
       }
@@ -125,7 +131,7 @@ const PersonalInfo = () => {
               value={value}
             />
           )}
-          name="phoneNumber"
+          name="phone"
           rules={{ required: true, pattern: /^[0-9]{10}$/ }}
           defaultValue=""
         />
@@ -144,7 +150,7 @@ const PersonalInfo = () => {
               value={value}
             />
           )}
-          name="citizenID"
+          name="cccd"
           rules={{ required: true, pattern: /^[0-9]{9}$/ }}
           defaultValue=""
         />

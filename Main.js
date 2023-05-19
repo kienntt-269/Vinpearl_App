@@ -41,6 +41,7 @@ import { AntDesign } from '@expo/vector-icons';
 import { View, Text } from 'react-native';
 import SelectPeople from './component/SelectPeople';
 import FilterOrder from './component/FilterOrder';
+import Blog from './screens/Blog';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -48,6 +49,12 @@ const Stack = createStackNavigator();
 const Auth = () => {
   const user = useSelector(selectUser);
   const navigation = useNavigation();
+  // if (user) {
+  //   navigation.reset({
+  //     index: 0,
+  //     routes: [{ name: 'Trang chủ' }],
+  //   });
+  // }
   return (
     <Tab.Navigator
       initialRouteName="Auth"
@@ -63,6 +70,8 @@ const Auth = () => {
               iconName = focused ? 'user-alt' : 'user-alt';
           } else if (route.name === 'Đơn hàng') {
             iconName = focused ? 'jedi-order' : 'jedi-order';
+          } else if (route.name === 'Blog') {
+            iconName = focused ? 'blog' : 'blog';
           }
 
           // You can return any component that you like here!
@@ -103,6 +112,11 @@ const Auth = () => {
             </View>
           )
         }}
+    />
+    <Tab.Screen
+        name="Blog"
+        component={Blog}
+        options={{headerShown: false}}
     />
     <Tab.Screen
         name="Tài khoản"

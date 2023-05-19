@@ -9,6 +9,12 @@ const homeApi = {
     getAllSite: () => axiosClient.get(`site/findAll`),
     getHotelDetail: () => axiosClient.get(`hotel/detail`),
     
+    //comments
+    searchComment: (postId, params) => axiosClient.get(`posts/${postId}/comments/search`, {params: params}),
+    addComment: (postId, data) => axiosClient.post(`posts/${postId}/comments/create`, data),
+    updateComment: (postId, id, data) => axiosClient.put(`posts/${postId}/comments/update/${id}`, data),
+    deleteComment: (postId, id) => axiosClient.get(`posts/${postId}/comments/delete/${id}`),
+    
     // tour
     searchTour: (params) => axiosClient.get(`tour/search`, {params: params}),
     getTourDetail: (id) => axiosClient.get(`tour/detail/${id}`),
@@ -24,8 +30,8 @@ const homeApi = {
     checkBookingRoomOK: () => axiosClient.get(`booking-room/check-payment-room-ok`),
     searchBookingRoom: (params) => axiosClient.get(`booking-room/search`, {params: params}),
     searchBookingTour: (params) => axiosClient.get(`booking-tour/search`, {params: params}),
-    getDetailBookingRoom: () => axiosClient.get(`booking-room/detail`),
-    getDetailBookingTour: () => axiosClient.get(`booking-tour/detail`),
+    getDetailBookingRoom: (id) => axiosClient.get(`booking-room/detail/${id}`),
+    getDetailBookingTour: (id) => axiosClient.get(`booking-tour/detail/${id}`),
     getBookingRoomByPaymentCode: () => axiosClient.get(`booking-room/findByPaymentCode`),
 }
 

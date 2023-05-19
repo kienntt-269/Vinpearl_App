@@ -1,9 +1,10 @@
-import react, { useState } from 'react';
+import react, { useState, useEffect, useContext } from 'react';
 import { StyleSheet } from 'react-native';
 import { Provider } from 'react-redux';
 import store from './redux/store';
 import Main from './Main';
 import * as Font from 'expo-font';
+// import { LoadingContext } from './LoadingContext';
 
 const loadFontAsync = async () => {
   await Font.loadAsync({
@@ -12,6 +13,13 @@ const loadFontAsync = async () => {
 };
 
 export default function App() {
+
+  // const { loading, showLoading, hideLoading } = useContext(LoadingContext);
+
+  useEffect(() => {
+    // showLoading();
+    // loadFontAsync().then(() => hideLoading());
+  }, []);
 
   const [fontLoaded, setFontLoaded] = useState(false);
 
