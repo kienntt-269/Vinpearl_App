@@ -70,7 +70,7 @@ const TourDetail = ({ route, navigation }) => {
                 <ScrollView style={{backgroundColor: '#FFF'}}>
                     <Image 
                         style={{height: 224, width: '100%', borderBottomLeftRadius: 8, borderBottomRightRadius: 8}}
-                        source={{uri: 'http://192.168.1.6:8080/images/home/banner.png'}}
+                        source={{uri: 'http://192.168.1.11:8080/images/home/banner.png'}}
                     />
                     <View>
                     {/* {

@@ -77,22 +77,22 @@ const SearchTour = ({navigation}) => {
         {
             id: 2,
             name: "Phú Quốc",
-            path: "http://192.168.1.6:8080/images/home/phuquoc.png",
+            path: "http://192.168.1.11:8080/images/home/phuquoc.png",
         },
         {
             id: 3,
             name: "Đà Nẵng",
-            path: "http://192.168.1.6:8080/images/home/danang.png",
+            path: "http://192.168.1.11:8080/images/home/danang.png",
         },
         {
             id: 1,
             name: "Nha Trang",
-            path: "http://192.168.1.6:8080/images/home/nhatrang.png",
+            path: "http://192.168.1.11:8080/images/home/nhatrang.png",
         },
         {
             id: 4,
             name: "Hội An",
-            path: "http://192.168.1.6:8080/images/home/hoian.png",
+            path: "http://192.168.1.11:8080/images/home/hoian.png",
         },
     ]
 

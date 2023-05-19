@@ -77,15 +77,15 @@ const OrderInforUser = ({ route, navigation }) => {
                     <View style={styles.itemWrapper}>
                         <View style={styles.groupItem}>
                             <Text style={styles.label}>Tên khách hàng:</Text>
-                            <Text style={styles.value}>{detailData.customer.fullName}</Text>
+                            <Text style={styles.value}>{detailData.customer?.fullName}</Text>
                         </View>
                         <View style={styles.groupItem}>
                             <Text style={styles.label}>Email khách hàng:</Text>
-                            <Text style={styles.value}>{detailData.customer.email}</Text>
+                            <Text style={styles.value}>{detailData.customer?.email}</Text>
                         </View>
                         <View style={styles.groupItem}>
                             <Text style={styles.label}>Số điện thoại:</Text>
-                            <Text style={styles.value}>{detailData.customer.phone}</Text>
+                            <Text style={styles.value}>{detailData.customer?.phone}</Text>
                         </View>
                         <View style={styles.groupItem}>
                             <Text style={styles.label}>Thời gian giao dịch:</Text>

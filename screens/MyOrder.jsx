@@ -12,11 +12,11 @@ import utils from '../utils/utils';
 import Price from '../utils/Price';
 import { Picker } from '@react-native-picker/picker';
 import { subMonths } from 'date-fns';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+// import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const MyOrder = async ({route}) => {
+const MyOrder = ({route}) => {
     const user = useSelector(selectUser);
-    const customerId = await AsyncStorage.getItem(utils.CONSTANTS.CUSTOMER_ID);
+    // const customerId = await AsyncStorage.getItem(utils.CONSTANTS.CUSTOMER_ID);
     const { time, serviceId, sTatusId} = route?.params || {};
     const navigation = useNavigation();
     const [open, setOpen] = useState(false);
@@ -59,7 +59,7 @@ const MyOrder = async ({route}) => {
         const getListBookingRoom = async () => {
           try {
             const data = {
-                customerId: user.id ? user.id : customerId,
+                customerId: user.id ? user.id : null,
                 status: statusId,
                 startTime: rangeTime[0],
                 endTime: rangeTime[1],
@@ -93,7 +93,7 @@ const MyOrder = async ({route}) => {
             totalBookingRoom == 0 && totalBookingTour == 0 ? <View style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '100%'}}>
                 <Image
                     style={{height: 150, width: 150,}}
-                    source={{uri: "http://192.168.1.6:8080/images/home/logo/empty-page.png"}}
+                    source={{uri: "http://192.168.1.11:8080/images/home/logo/empty-page.png"}}
                 />
                 <Text>Không có kết quả tìm kiếm phù hợp</Text>
             </View> : null

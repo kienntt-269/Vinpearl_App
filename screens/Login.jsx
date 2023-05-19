@@ -51,7 +51,7 @@ const Login = ({ navigation }) => {
       if (res.data.code === 200) {
         // Lưu token vào AsyncStorage
         await AsyncStorage.setItem(utils.CONSTANTS.TOKEN, res.data.data.token);
-        await AsyncStorage.setItem(utils.CONSTANTS.CUSTOMER_ID, res.data.data.id);
+        // await AsyncStorage.setItem(utils.CONSTANTS.CUSTOMER_ID, res.data.data.id);
         navigation.navigate("Auth");
         dispatch(
           login({
@@ -93,7 +93,7 @@ const Login = ({ navigation }) => {
         <Image
           style={{ width: 120, height: 120, resizeMode: "contain" }}
           source={{
-            uri: "http://192.168.1.6:8080/images/home/logo/vinpearl-logo.png",
+            uri: "http://192.168.1.11:8080/images/home/logo/vinpearl-logo.png",
           }}
         />
       </View>
