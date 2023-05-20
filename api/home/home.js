@@ -4,10 +4,12 @@ const homeApi = {
 
     // home
     searchPost: (params) => axiosClient.get(`post/search`, {params: params}),
+    postDetail: (id) => axiosClient.get(`post/detail/${id}`),
     searchRoomType: (params) => axiosClient.get(`room/room-type/search`, {params: params}),
     searchHotel: (params) => axiosClient.get(`hotel/search/customer`, {params: params}),
     getAllSite: () => axiosClient.get(`site/findAll`),
     getHotelDetail: () => axiosClient.get(`hotel/detail`),
+    getTourRecommendation: (id) => axiosClient.get(`tour/recommendation/${id}`),
     
     //comments
     searchComment: (postId, params) => axiosClient.get(`posts/${postId}/comments/search`, {params: params}),

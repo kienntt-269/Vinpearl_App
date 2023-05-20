@@ -7,8 +7,11 @@ import { useSelector } from "react-redux";
 import { AntDesign, FontAwesome5 } from '@expo/vector-icons';
 import DefaultStyle from "../theme";
 import { useNavigation } from "@react-navigation/native";
+import { useDispatch } from "react-redux";
+import { removeBookingHotel } from "../redux/customerHotel/customerHotelSlice";
 
 const PaymentBooking = () => {
+    const dispatch = useDispatch();
     const navigation = useNavigation();
     const bookingHotelDetail = useSelector(state => state.customerHotel.booking);
     const bookingTourDetail = useSelector(state => state.customerTour.booking);
@@ -17,7 +20,12 @@ const PaymentBooking = () => {
     useEffect(() => {
         const addBookingRoom = async () => {
             try {
-                const res = await homeApi.addBookingRoom(bookingHotelDetail);
+                let res;
+                if (bookingHotelDetail) {
+                    res = await homeApi.addBookingRoom(bookingHotelDetail);
+                } else {
+                    res = await homeApi.addBookingTour(bookingTourDetail);
+                }
                 console.log(res.data.data.url);
                 setUrl(res.data.data.url);
             } catch (err) {
@@ -33,6 +41,12 @@ const PaymentBooking = () => {
             setIsPaymentSuccess(1);
         } else if (navState.url.includes('vnp_ResponseCode=24')) {
             setIsPaymentSuccess(2);
+        }
+
+        if (bookingHotelDetail) {
+            dispatch(removeBookingHotel(bookingHotelDetail));
+        } else {
+            dispatch(removeBookingHotel(bookingTourDetail));
         }
       };
 

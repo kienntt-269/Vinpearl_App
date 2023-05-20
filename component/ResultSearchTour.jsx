@@ -8,6 +8,7 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons'; 
 import { MaterialIcons } from '@expo/vector-icons';
 import DefaultStyle from '../theme';
+import domain from '../api/domain';
 
 const ResultSearchTour = ({ route, navigation }) => {
     /* 2. Get the param */
@@ -69,7 +70,7 @@ const ResultSearchTour = ({ route, navigation }) => {
               >
                   <Image 
                       style={{width: '100%', height: 170, width: '100%', borderRadius: 14}}
-                      source={{uri: item.path}}
+                      source={{uri: item.path?.replace("http://localhost:8080", domain)}}
                   />
                   <View style={styles.description}>
                     <Text numberOfLines={1} style={[DefaultStyle.text, styles.nameTour]}>

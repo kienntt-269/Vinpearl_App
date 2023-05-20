@@ -12,6 +12,7 @@ import utils from '../utils/utils';
 import Price from '../utils/Price';
 import { Picker } from '@react-native-picker/picker';
 import { subMonths } from 'date-fns';
+import domain from '../api/domain';
 // import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const MyOrder = ({route}) => {
@@ -93,7 +94,7 @@ const MyOrder = ({route}) => {
             totalBookingRoom == 0 && totalBookingTour == 0 ? <View style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '100%'}}>
                 <Image
                     style={{height: 150, width: 150,}}
-                    source={{uri: "http://192.168.1.11:8080/images/home/logo/empty-page.png"}}
+                    source={{uri: `${domain}/images/home/logo/empty-page.png`}}
                 />
                 <Text>Không có kết quả tìm kiếm phù hợp</Text>
             </View> : null
@@ -160,7 +161,7 @@ const MyOrder = ({route}) => {
                         <View style={styles.body}>
                             <Image
                                 style={{ width: 110, height: 110 }}
-                                source={{ uri: item.hotel?.images[0]?.path }}
+                                source={{ uri: item.hotel?.images[0]?.path?.replace("http://localhost:8080", domain) }}
                             />
                             <View style={styles.info}>
                                 <Text style={[DefaultStyle.text, styles.name]}>{item.hotel?.name}</Text>
@@ -217,7 +218,7 @@ const MyOrder = ({route}) => {
                         <View style={styles.body}>
                             <Image
                                 style={{ width: 80, height: 80 }}
-                                source={{ uri: item.tour?.images[0]?.path }}
+                                source={{ uri: item.tour?.images[0]?.path?.replace("http://localhost:8080", domain) }}
                             />
                             <View style={styles.info}>
                                 <Text style={[DefaultStyle.text, styles.name]}>{item.tour?.name}</Text>

@@ -93,7 +93,7 @@ const Login = ({ navigation }) => {
         <Image
           style={{ width: 120, height: 120, resizeMode: "contain" }}
           source={{
-            uri: "http://192.168.1.11:8080/images/home/logo/vinpearl-logo.png",
+            uri: "${domain}/images/home/logo/vinpearl-logo.png",
           }}
         />
       </View>

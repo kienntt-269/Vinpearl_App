@@ -15,11 +15,8 @@ import SignIn from './screens/SignIn'
 import Login from './screens/Login'
 import PersonalInfo from './component/PersonalInfo';
 import TransactionHistory from './component/TransactionHistory';
-import Cart from './component/Cart';
 import TourDetail from './component/TourDetail';
-import OrderInfor from './component/OrderInfor';
 import OrderInforUser from './component/OrderInforUser';
-import OrderManagement from './component/OrderManagement';
 import userSlice from './redux/user/userSlice';
 import { useSelector } from 'react-redux';
 import { selectUser } from './redux/user/userSlice';
@@ -461,26 +458,6 @@ const Main = () => {
               }}
             />
             <Stack.Screen 
-              name='Cart'
-              component={Cart}
-              options={{
-                title: 'Giỏ hàng', //Set Header Title
-                headerStyle: {
-                  flex: 1,
-                  justifyContent: 'center',
-                  height: 100,
-                  width: '100%',
-                  flexDirection: 'row',
-                  backgroundColor: "#FFF",
-                },
-                headerTintColor: '#2B2F34', //Set Header text color
-                headerTitleStyle: {
-                  fontWeight: 'bold', //Set Header text style
-                },
-                headerTitleAlign: "center",
-              }}
-            />
-            <Stack.Screen 
               name='Thông tin chi tiết tour'
               component={TourDetail}
               options={({route}) => (
@@ -522,23 +499,6 @@ const Main = () => {
               )}
             />
             <Stack.Screen 
-              name='OrderInfor'
-              component={OrderInfor}
-              options={({route}) => (
-                {
-                  title: 'Thông tin đặt hàng', //Set Header Title
-                  headerStyle: {
-                    backgroundColor: '#307ecc', //Set Header color
-                  },
-                  headerTintColor: '#fff', //Set Header text color
-                  headerTitleStyle: {
-                    fontWeight: 'bold', //Set Header text style
-                  },
-                  headerTitleAlign: "center",
-                }
-              )}
-            />
-            <Stack.Screen 
               name='OrderInforUser'
               component={OrderInforUser}
               options={({route}) => (
@@ -554,26 +514,6 @@ const Main = () => {
                   headerTitleAlign: "center",
                 }
               )}
-            />
-            <Stack.Screen 
-              name='OrderManagement'
-              component={OrderManagement}
-              options={{
-                title: 'Đơn hàng mới', //Set Header Title
-                headerStyle: {
-                  flex: 1,
-                  justifyContent: 'center',
-                  height: 100,
-                  width: '100%',
-                  flexDirection: 'row',
-                  backgroundColor: "#FFF",
-                },
-                headerTintColor: '#2B2F34', //Set Header text color
-                headerTitleStyle: {
-                  fontWeight: 'bold', //Set Header text style
-                },
-                headerTitleAlign: "center",
-              }}
             />
           </Stack.Navigator>
         </NavigationContainer>

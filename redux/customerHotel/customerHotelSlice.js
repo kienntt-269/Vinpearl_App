@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-export const customerHotelSlide = createSlice({
+export const customerHotelSlice = createSlice({
     name: "customerHotel",
     initialState: {
         booking: {},
@@ -14,6 +14,6 @@ export const customerHotelSlide = createSlice({
       },
 })
 
-export const { addBookingHotel, removeBookingHotel } = customerHotelSlide.actions;
+export const { addBookingHotel, removeBookingHotel } = customerHotelSlice.actions;
 
-export default customerHotelSlide.reducer
+export default customerHotelSlice.reducer

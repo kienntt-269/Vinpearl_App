@@ -25,6 +25,9 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "certificateHash": "SHA256 Fingerprint=39:26:BD:8B:06:D4:C0:6D:18:18:AE:81:55:D2:CA:31:47:D6:30:68:50:A1:A9:56:74:2B:A3:9D:ED:C6:17:04"
     }
   }
 }

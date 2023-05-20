@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text, TextInput, TouchableOpacity, FlatList } from 'react-native'
+import { StyleSheet, View, Text, TextInput, TouchableOpacity, FlatList, Image } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import homeApi from '../api/home/home'
 import utils from '../utils/utils'

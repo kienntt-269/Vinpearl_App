@@ -1,24 +1,35 @@
 import { StyleSheet, Text, View, ScrollView } from 'react-native'
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import RenderHtml from 'react-native-render-html';
 import { useWindowDimensions } from 'react-native';
 import Comment from './Comment';
 import DefaultStyle from '../theme';
+import homeApi from '../api/home/home';
 
 const PostDetail = ({route, value, icon, style, ...otherProps}) => {
   const { width } = useWindowDimensions();
   const { itemId, name } = route.params;
+  const [postDetail, setPostDetail] = useState(second)
   console.log(name);
-  const source = {
-    html: name,
-  };
+
+  useEffect(() => {
+    const getPostDetail = async () => {
+      try {
+          const res = await homeApi.postDetail(itemId);
+          setPostDetail(res.data.data);
+      } catch(err) {
+          console.log(err)
+      }
+    }
+    getPostDetail() 
+  }, [])
   return (
     <ScrollView
       style={[DefaultStyle.text, styles.postDetail]}
     >
       <RenderHtml
         contentWidth={width}
-        source={source}
+        source={{html: postDetail?.content}}
       />
       <Comment postId={itemId}/>
     </ScrollView>

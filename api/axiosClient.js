@@ -1,12 +1,11 @@
 import axios from 'axios';
 import utils from '../utils/utils';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { LoadingContext } from '../LoadingContext';
-import { useContext } from 'react';
+import { showSpinner, hideSpinner } from '../redux/spinner/spinnerSlice';
+import store from '../redux/store';
+import domain from './domain';
 
-const baseURL = 'https://192.168.1.3:8443/api/v1/';
-
-// const { showLoading, hideLoading } = useContext(LoadingContext);
+const baseURL = `${domain}/api/v1/`;
 
 const axiosClient = axios.create({
   baseURL: baseURL,
@@ -15,7 +14,6 @@ const axiosClient = axios.create({
   },
   timeout: 5000,
 });
-
 
 axiosClient.interceptors.request.use(
   async (config) => {
@@ -26,12 +24,12 @@ axiosClient.interceptors.request.use(
     }
 
     // Hiển thị spinner overlay
-    // showLoading();
+    store.dispatch(showSpinner(true));
 
     return config;
   },
   (error) => {
-    // hideLoading();
+    store.dispatch(hideSpinner(false));
     return Promise.reject(error);
   }
 );
@@ -39,13 +37,13 @@ axiosClient.interceptors.request.use(
 axiosClient.interceptors.response.use(
   (response) => {
     // Ẩn spinner overlay khi nhận được response
-    // hideLoading();
+    store.dispatch(hideSpinner(false));
 
     return response;
   },
   (error) => {
     // Ẩn spinner overlay nếu xảy ra lỗi
-    // hideLoading();
+    store.dispatch(hideSpinner(false));
 
     return Promise.reject(error);
   }

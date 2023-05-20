@@ -3,7 +3,6 @@ import axios from 'axios'
 import domain from './domain'
 
 const accountApi = {
-    // login: (params) => axios.post(`${domain}/customer/login`, params),
     login: (data) => axiosClient.post(`customer/login`, data),
     register: (data) => axiosClient.post(`customer/register`, data),
     detail: (id) => axiosClient.get(`customer/detail/${id}`),

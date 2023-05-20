@@ -200,9 +200,10 @@ const styles = StyleSheet.create({
     flexBasis: '66.66667%'
   },
   wrapper: {
-
+    marginBottom: 16,
   },
   label: {
-
+    fontSize: 16,
+    marginBottom: 8,
   },
 })

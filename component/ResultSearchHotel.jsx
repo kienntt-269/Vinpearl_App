@@ -5,6 +5,7 @@ import DefaultStyle from '../theme';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { EvilIcons } from '@expo/vector-icons';
 import Price from '../utils/Price';
+import domain from '../api/domain';
 
 const ResultSearchHotel = ({ route, navigation }) => {
   /* 2. Get the param */
@@ -48,7 +49,7 @@ const ResultSearchHotel = ({ route, navigation }) => {
               >
                 <Image 
                   style={{width: '100%', height: 170, width: '100%', borderRadius: 14}}
-                  source={{uri: item.path}}
+                  source={{uri: item.path?.replace("http://localhost:8080", domain)}}
                 />
                 <View style={styles.description}>
                   <Text style={[DefaultStyle.text, styles.name]}>{item.name}</Text>

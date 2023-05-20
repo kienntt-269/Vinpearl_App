@@ -3,26 +3,28 @@ import React, { useState, useEffect } from 'react'
 import homeApi from '../api/home/home'
 import { useSelector } from 'react-redux';
 import { selectUser } from '../redux/user/userSlice';
+import { selectSpinner } from '../redux/spinner/spinnerSlice';
 import { Button } from "@react-native-material/core";
 import { Ionicons, FontAwesome, FontAwesome5, MaterialIcons } from '@expo/vector-icons';
 import Price from '../utils/Price';
 import DefaultStyle from '../theme';
+import LoadingSpinner from '../constants/LoadingSpinner';
+import domain from '../api/domain';
+import { useNavigation } from '@react-navigation/native';
 
-const Home = ({ navigation }) => {
+// const Home = ({ navigation }) => {
+const Home = () => {
+  const navigation = useNavigation();
   const user = useSelector(selectUser);
-  const [listOfPost, setListOfPost] = useState([])
-  const [listOfSuggest, setListOfSuggest] = useState([])
+  const isLoading = useSelector(selectSpinner);
+  const [listOfPost, setListOfPost] = useState([]);
+  const [listOfSuggest, setListOfSuggest] = useState([]);
   useEffect(() => {
     const getListOfSuggest = async () => {
       try {
-        const data = {
-          siteId: 2,
-          page: 0,
-          size: 5,
-          sort: 'id,desc',
-        }
-          const res = await homeApi.searchTour(data);
-          setListOfSuggest(res.data.data.content);
+          const res = await homeApi.getTourRecommendation(user.id);
+          console.log(res.data.data[0]);
+          setListOfSuggest(res.data.data);
       } catch(err) {
           console.log(err)
       }
@@ -50,14 +52,14 @@ const Home = ({ navigation }) => {
   const renderItemSuggest = ({ item }) => (
     <TouchableOpacity
         style={styles.itemWrapper}
-        onPress={() => navigation.navigate('TourDetail', {
+        onPress={() => navigation.navigate('Thông tin chi tiết tour', {
             itemId: item.id,
-            name: item.name,
+            // name: item.name,
         })}
     >
         <Image 
             style={{width: '100%', height: 192, width: 162, borderRadius: 12}}
-            source={{uri: item.path}}
+            source={{uri: item?.images[0]?.path?.replace("http://localhost:8080", domain)}}
         />
         <View>
           <Text numberOfLines={2} style={[DefaultStyle.text, styles.namePost]}>
@@ -75,12 +77,12 @@ const Home = ({ navigation }) => {
         style={styles.itemWrapper}
         onPress={() => navigation.navigate('PostDetail', {
             itemId: item.id,
-            name: item.content,
+            // name: item.content,
         })}
     >
       <Image 
           style={{width: '100%', height: 192, width: 162, borderRadius: 8}}
-          source={{uri: item.path}}
+          source={{uri: item.path?.replace("http://localhost:8080", domain)}}
       />
       <Text numberOfLines={2} style={[DefaultStyle.text, styles.namePost]}>
         {item.name}
@@ -90,70 +92,74 @@ const Home = ({ navigation }) => {
 
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#fff' }}>
-      <ScrollView>
-        <ImageBackground source={{uri: 'http://192.168.1.11:8080/images/home/banner.png'}} resizeMode="cover" style={styles.image}>
-          <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', paddingHorizontal: 20, marginTop: 10, width: '100%'}}>
-            <Text style={[DefaultStyle.text, styles.text]}>
-              <Text>Xin chào, </Text>
-              <Text style={{textTransform: 'uppercase'}}>
-                {user.fullName}
+      {
+        isLoading ? <LoadingSpinner /> : 
+        <ScrollView>
+          <ImageBackground source={{uri: `${domain}/images/home/banner.png`}} resizeMode="cover" style={styles.image}>
+            <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', paddingHorizontal: 20, marginTop: 10, width: '100%'}}>
+              <Text style={[DefaultStyle.text, styles.text]}>
+                <Text>Xin chào, </Text>
+                <Text style={{textTransform: 'uppercase'}}>
+                  {user.fullName}
+                </Text>
               </Text>
-            </Text>
+            </View>
+          </ImageBackground>
+          <View style={styles.homeSelect}>
+            <View style={styles.item}>
+              <TouchableHighlight onPress={() => navigation.navigate('SearchHotel')} style={styles.wrapper}>
+                <View>
+                  <Ionicons name="ios-bed" size={30} color="#E8952F" />
+                  <Text style={[DefaultStyle.text, styles.name]}>Khách sạn</Text>
+                </View>
+              </TouchableHighlight>
+            </View>
+            <View style={styles.item}>
+              <TouchableHighlight style={styles.wrapper}>
+                <View>
+                  <FontAwesome name="plane" size={30} color="#E8952F" />
+                  <Text style={[DefaultStyle.text, styles.name]}>Vé máy bay</Text>
+                </View>
+              </TouchableHighlight>
+            </View>
+            <View style={styles.item}>
+              <TouchableHighlight onPress={() => navigation.navigate('SearchTour')} style={styles.wrapper}>
+                <View>
+                  <MaterialIcons name="tour" size={30} color="#E8952F" />
+                  <Text style={[DefaultStyle.text, styles.name]}>Tour & Trải nghiệm</Text>
+                </View>
+              </TouchableHighlight>
+            </View>
+            <View style={styles.item}>
+              <TouchableHighlight style={styles.wrapper}>
+                <View>
+                  <FontAwesome5 name="studiovinari" size={30} color="#E8952F" />
+                  <Text style={[DefaultStyle.text, styles.name]}>VinWonders</Text>
+                </View>
+              </TouchableHighlight>
+            </View>
           </View>
-        </ImageBackground>
-        <View style={styles.homeSelect}>
-          <View style={styles.item}>
-            <TouchableHighlight onPress={() => navigation.navigate('SearchHotel')} style={styles.wrapper}>
-              <View>
-                <Ionicons name="ios-bed" size={30} color="#E8952F" />
-                <Text style={[DefaultStyle.text, styles.name]}>Khách sạn</Text>
-              </View>
-            </TouchableHighlight>
+          <View style={styles.suggest}>
+            <Text style={[DefaultStyle.text, styles.title]}>Gợi ý cho bạn</Text>
+            <FlatList
+                horizontal={true}
+                data={listOfSuggest}
+                renderItem={renderItemSuggest}
+                keyExtractor={(item) => item.id}
+            />
           </View>
-          <View style={styles.item}>
-            <TouchableHighlight style={styles.wrapper}>
-              <View>
-                <FontAwesome name="plane" size={30} color="#E8952F" />
-                <Text style={[DefaultStyle.text, styles.name]}>Vé máy bay</Text>
-              </View>
-            </TouchableHighlight>
+          <View style={styles.suggest}>
+            <Text style={[DefaultStyle.text, styles.title]}>Đánh giá của khách hàng</Text>
+            <FlatList
+                horizontal={true}
+                data={listOfPost}
+                renderItem={renderItemPost}
+                keyExtractor={(item) => item.id}
+            />
           </View>
-          <View style={styles.item}>
-            <TouchableHighlight onPress={() => navigation.navigate('SearchTour')} style={styles.wrapper}>
-              <View>
-                <MaterialIcons name="tour" size={30} color="#E8952F" />
-                <Text style={[DefaultStyle.text, styles.name]}>Tour & Trải nghiệm</Text>
-              </View>
-            </TouchableHighlight>
-          </View>
-          <View style={styles.item}>
-            <TouchableHighlight style={styles.wrapper}>
-              <View>
-                <FontAwesome5 name="studiovinari" size={30} color="#E8952F" />
-                <Text style={[DefaultStyle.text, styles.name]}>VinWonders</Text>
-              </View>
-            </TouchableHighlight>
-          </View>
-        </View>
-        <View style={styles.suggest}>
-          <Text style={[DefaultStyle.text, styles.title]}>Gợi ý cho bạn</Text>
-          <FlatList
-              horizontal={true}
-              data={listOfSuggest}
-              renderItem={renderItemSuggest}
-              keyExtractor={(item) => item.id}
-          />
-        </View>
-        <View style={styles.suggest}>
-          <Text style={[DefaultStyle.text, styles.title]}>Đánh giá của khách hàng</Text>
-          <FlatList
-              horizontal={true}
-              data={listOfPost}
-              renderItem={renderItemPost}
-              keyExtractor={(item) => item.id}
-          />
-        </View>
-      </ScrollView>
+        </ScrollView>
+      }
+      
     </View>
   )
 }

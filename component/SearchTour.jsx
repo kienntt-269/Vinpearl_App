@@ -8,6 +8,7 @@ import Price from '../utils/Price';
 import DefaultStyle from '../theme';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import domain from '../api/domain';
 
 const SearchTour = ({navigation}) => {
     const [listOfSuggest, setListOfSuggest] = useState([])
@@ -77,22 +78,22 @@ const SearchTour = ({navigation}) => {
         {
             id: 2,
             name: "Phú Quốc",
-            path: "http://192.168.1.11:8080/images/home/phuquoc.png",
+            path: `${domain}/images/home/phuquoc.png`,
         },
         {
             id: 3,
             name: "Đà Nẵng",
-            path: "http://192.168.1.11:8080/images/home/danang.png",
+            path: `${domain}/images/home/danang.png`,
         },
         {
             id: 1,
             name: "Nha Trang",
-            path: "http://192.168.1.11:8080/images/home/nhatrang.png",
+            path: `${domain}/images/home/nhatrang.png`,
         },
         {
             id: 4,
             name: "Hội An",
-            path: "http://192.168.1.11:8080/images/home/hoian.png",
+            path: `${domain}/images/home/hoian.png`,
         },
     ]
 
@@ -106,7 +107,7 @@ const SearchTour = ({navigation}) => {
         >
             <Image 
                 style={{width: '100%', height: 182}}
-                source={{uri: item.path}}
+                source={{uri: item.path?.replace("http://localhost:8080", domain)}}
             />
             <Text style={[DefaultStyle.text, styles.nameSite]}>
                 {item.name}
@@ -124,7 +125,7 @@ const SearchTour = ({navigation}) => {
         >
             <Image 
                 style={{width: '100%', height: 192, width: 162, borderRadius: 12}}
-                source={{uri: item.path}}
+                source={{uri: item.path?.replace("http://localhost:8080", domain)}}
             />
             <View>
               <Text numberOfLines={2} style={[DefaultStyle.text, styles.namePost]}>

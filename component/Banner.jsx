@@ -5,8 +5,9 @@ import { selectUser } from '../redux/user/userSlice';
 import DefaultStyle from '../theme';
 import { AntDesign, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import domain from '../api/domain';
 
-const banner = {uri: 'http://192.168.1.11:8080/images/home/banner.png'};
+const banner = {uri: `${domain}/images/home/banner.png`};
 
 const Banner = () => {
     const user = useSelector(selectUser);

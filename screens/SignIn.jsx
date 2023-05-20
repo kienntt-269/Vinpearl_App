@@ -68,7 +68,7 @@ const SignIn = ({ navigation }) => {
         <Image
           style={{ width: 70, height: 70 }}
           source={{
-            uri: "http://192.168.1.11:8080/images/home/logo/vinpearl-logo.svg",
+            uri: "${domain}/images/home/logo/vinpearl-logo.svg",
           }}
         />
       </View>

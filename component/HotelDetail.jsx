@@ -9,9 +9,10 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { AntDesign, MaterialIcons } from '@expo/vector-icons';
 import Swiper from 'react-native-swiper'
 import { useDispatch, useSelector } from 'react-redux';
-import { addBookingHotel } from '../redux/customerHotel/customerHotelSlide';
+import { addBookingHotel } from '../redux/customerHotel/customerHotelSlice';
 import { selectUser } from '../redux/user/userSlice';
 import utils from '../utils/utils';
+import domain from '../api/domain';
 
 const HotelDetail = ({ route, navigation }) => {
   const dispatch = useDispatch();
@@ -118,7 +119,7 @@ const HotelDetail = ({ route, navigation }) => {
                     <Image
                       key={indexImage} 
                       style={{height: '100%', width: '100%',}}
-                      source={{uri: image.path}}
+                      source={{uri: image.path?.replace("http://localhost:8080", domain)}}
                     />
                   )) : null
                 }
@@ -178,16 +179,16 @@ const HotelDetail = ({ route, navigation }) => {
                             <View key={indexContents}>
                               <View>
                                 {
-                                  itemContents?.name && itemContents?.name.includes('Bữa') ? <Image source={{uri: "http://192.168.1.11:8080/images/home/icon/b2abe8b0f56e45faa5d21e96c62e6922_MealPlan.png"}}/> : null
+                                  itemContents?.name && itemContents?.name.includes('Bữa') ? <Image source={{uri: `${domain}/images/home/icon/b2abe8b0f56e45faa5d21e96c62e6922_MealPlan.png`}}/> : null
                                 }
                                 {
-                                  itemContents?.name && itemContents?.name.includes('Voucher Grandworld') ? <Image source={{uri: "http://192.168.1.11:8080/images/home/icon/54a5a905d08047a1b9f3e81e4e99b089_Hotel Dis- Credit.png"}}/> : null
+                                  itemContents?.name && itemContents?.name.includes('Voucher Grandworld') ? <Image source={{uri: `${domain}/images/home/icon/54a5a905d08047a1b9f3e81e4e99b089_Hotel Dis- Credit.png`}}/> : null
                                 }
                                 {
-                                  itemContents?.name && itemContents?.name.includes('hoàn/ hủy') ? <Image source={{uri: "http://192.168.1.11:8080/images/home/icon/calendar-cancel.b2f8a00d.png"}}/> : null
+                                  itemContents?.name && itemContents?.name.includes('hoàn/ hủy') ? <Image source={{uri: `${domain}/images/home/icon/calendar-cancel.b2f8a00d.png`}}/> : null
                                 }
                                 {
-                                  itemContents?.name && itemContents?.name.includes('Vé') ? <Image source={{uri: "http://192.168.1.11:8080/images/home/icon/e911ab39130e4ebabec800ac3af34b30_Vinwonder.png"}}/> : null
+                                  itemContents?.name && itemContents?.name.includes('Vé') ? <Image source={{uri: `${domain}/images/home/icon/e911ab39130e4ebabec800ac3af34b30_Vinwonder.png`}}/> : null
                                 }
                                 <Text numberOfLines={1} style={styles.nameContents}>{itemContents.name}</Text>
                               </View>

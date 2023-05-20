@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity, FlatList, ScrollView, ImageBackground, useWindowDimensions } from 'react-native'
+import { StyleSheet, Text, View, Image, TouchableOpacity, FlatList, ScrollView, ImageBackground, useWindowDimensions, Dimensions } from 'react-native'
 import React, {useState, useEffect} from 'react'
 import homeApi from '../api/home/home';
 import Price from '../utils/Price';
@@ -8,12 +8,13 @@ import { Button } from '@react-native-material/core';
 import DefaultStyle from '../theme';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart, removeFromCart  } from '../redux/tour-cart/cartItemsSlide';
-import { addBookingTour } from '../redux/customerTour/customerTourSlide';
+import { addBookingTour } from '../redux/customerTour/customerTourSlice';
 import { selectUser } from '../redux/user/userSlice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import utils from '../utils/utils';
 
 const TourDetail = ({ route, navigation }) => {
+    const { width } = Dimensions.get('window');
     const dispatch = useDispatch();
     const user = useSelector(selectUser);
     /* 2. Get the param */
@@ -63,14 +64,25 @@ const TourDetail = ({ route, navigation }) => {
         dispatch(removeFromCart(id));
     };
 
+    const renderImageTour = ({ item }) => (
+        <View style={{width: width, height: 300}}>
+            <Image 
+                style={{width: '100%', height: '100%'}}
+                source={{uri: item?.path?.replace("http://localhost:8080", domain)}}
+            />
+        </View>
+      );
+
     return (
         <View style={{flex: 1}}>
             {
                 tourDetail ? 
                 <ScrollView style={{backgroundColor: '#FFF'}}>
-                    <Image 
-                        style={{height: 224, width: '100%', borderBottomLeftRadius: 8, borderBottomRightRadius: 8}}
-                        source={{uri: 'http://192.168.1.11:8080/images/home/banner.png'}}
+                    <FlatList
+                        data={tourDetail?.images}
+                        renderItem={renderImageTour}
+                        keyExtractor={(item) => item.id.toString()}
+                        horizontal
                     />
                     <View>
                     {/* {
@@ -213,9 +225,7 @@ const TourDetail = ({ route, navigation }) => {
                             paymentAmount: priceAdultSelect * 2 + priceChildrenSelect * 2,
                         };
                         dispatch(addBookingTour(dataBookingTour));
-                        navigation.navigate('SummaryHotel', {
-                          data: dataBookingTour,
-                        });
+                        navigation.navigate('PaymentBooking');
                       }}
                 />
             </View>
