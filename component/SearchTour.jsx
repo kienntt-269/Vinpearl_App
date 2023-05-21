@@ -118,7 +118,7 @@ const SearchTour = ({navigation}) => {
     const renderItemSuggest = ({ item }) => (
         <TouchableOpacity
             style={styles.itemWrapperSuggest}
-            onPress={() => navigation.navigate('TourDetail', {
+            onPress={() => navigation.navigate('Thông tin chi tiết tour', {
                 itemId: item.id,
                 name: item.name,
             })}

@@ -10,8 +10,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addToCart, removeFromCart  } from '../redux/tour-cart/cartItemsSlide';
 import { addBookingTour } from '../redux/customerTour/customerTourSlice';
 import { selectUser } from '../redux/user/userSlice';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import utils from '../utils/utils';
 
 const TourDetail = ({ route, navigation }) => {
     const { width } = Dimensions.get('window');
@@ -30,7 +28,6 @@ const TourDetail = ({ route, navigation }) => {
     const [priceAdultMin, setPriceAdultMin] = useState(0);
     const [priceAdultSelect, setPriceAdultSelect] = useState(0);
     const [priceChildrenSelect, setPriceChildrenSelect] = useState(0);
-    const customerId = AsyncStorage.getItem(utils.CONSTANTS.TOKEN);
     useEffect(() => {
         const getListOfSuggest = async () => {
           try {
@@ -215,13 +212,13 @@ const TourDetail = ({ route, navigation }) => {
                     onPress={() => {
                         const dataBookingTour = {
                             tourId: tourDetail.id,
-                            tourName: tourDetail.name,
                             hotelId: hotelList[indexRoute]?.id,
-                            hotelName: hotelList[indexRoute]?.name,
-                            customerId: user.id || customerId,
+                            // tourName: tourDetail.name,
+                            // hotelName: hotelList[indexRoute]?.name,
+                            customerId: user.id,
                             numberAdult: 2,
                             numberChildren: 2,
-                            description: "Đặt tour tại Vinpearl",
+                            description: "Đặt tour tại Vinpearl ...",
                             paymentAmount: priceAdultSelect * 2 + priceChildrenSelect * 2,
                         };
                         dispatch(addBookingTour(dataBookingTour));

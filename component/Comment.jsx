@@ -1,9 +1,14 @@
-import { StyleSheet, View, Text, TextInput, TouchableOpacity, FlatList, Image } from 'react-native'
+import { StyleSheet, View, Text, TextInput, TouchableOpacity, FlatList, Image, useWindowDimensions } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import homeApi from '../api/home/home'
 import utils from '../utils/utils'
+import domain from '../api/domain'
+import RenderHTML from 'react-native-render-html'
+import { useSelector } from 'react-redux'
+import { selectUser } from '../redux/user/userSlice'
 
 const Comment = ({ postId }) => {
+  const user = useSelector(selectUser);
   const [listOfData, setListOfData] = useState([])
   const [comment, setComment] = useState([]);
 
@@ -27,7 +32,7 @@ const Comment = ({ postId }) => {
   const handleSubmit = async () => {
     const data = {
       content: comment,
-      customerId: localStorage.getItem(utils.CONSTANTS.CUSTOMER_ID),
+      customerId: user.id,
     }
     try {
       const res = await homeApi.addComment(postId, data);
@@ -42,40 +47,50 @@ const Comment = ({ postId }) => {
     }
   }
 
+  const { width } = useWindowDimensions();
+
   return (
     <View style={styles.commentContainer}>
-      <Text style={styles.commentTitle}>Comments</Text>
+      <Text style={styles.commentTitle}>Bình luận</Text>
       <FlatList
         data={listOfData}
         renderItem={({ item }) => (
           <View style={styles.commentContainer}>
-            <Text style={styles.commentAuthor}>{item.author}</Text>
-            <Text style={styles.commentContent}>{item.content}</Text>
+            <View style={{flexDirection: 'row'}}>
+              <Image source={{ uri: `${domain}/images/home/danang.png` }} style={styles.commentUserImage} />
+              <Text style={styles.commentAuthor}>{item?.customer?.fullName}</Text>
+            </View>
+            <View style={{width: '100%', borderRadius: 8, borderColor: '#ccc', borderWidth: 1, marginTop: 10, }}>
+              <RenderHTML
+                contentWidth={width}
+                source={{html: item?.content}}
+              />
+            </View>
           </View>
         )}
         keyExtractor={(item) => item.id.toString()}
       />
       <View style={styles.commentForm}>
-      <View style={styles.commentUser}>
-        <Image source={{ uri: 'http://192.168.1.3:8080/images/home/logo/empty-page.png' }} style={styles.commentUserImage} />
-        <Text style={styles.commentUserName}>Nguyễn Văn A</Text>
+        <View style={styles.commentUser}>
+          <Image source={{ uri: `${domain}/images/home/danang.png` }} style={styles.commentUserImage} />
+          <Text style={styles.commentUserName}>{user.fullName}</Text>
+        </View>
+        <View style={styles.commentInput}>
+          <TextInput
+            style={styles.commentInputText}
+            placeholder="Thêm mới bình luận"
+            value={comment}
+            onChangeText={setComment}
+            multiline
+          />
+          <TouchableOpacity
+            style={styles.commentFormButton}
+            onPress={handleSubmit}
+          >
+            <Text style={styles.commentFormButtonText}>Thêm</Text>
+          </TouchableOpacity>
+        </View>
       </View>
-      <View style={styles.commentInput}>
-        <TextInput
-          style={styles.commentInputText}
-          placeholder="Thêm mới bình luận"
-          value={comment}
-          onChangeText={setComment}
-          multiline
-        />
-        <TouchableOpacity
-          style={styles.commentFormButton}
-          onPress={handleSubmit}
-        >
-          <Text style={styles.commentFormButtonText}>Thêm</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
     </View>
   )
 }
@@ -106,8 +121,7 @@ const styles = StyleSheet.create({
   },
 
   commentForm: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: 'column',
     justifyContent: 'flex-start',
     padding: 10,
     marginBottom: 10,
@@ -135,7 +149,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginLeft: 10,
+    marginTop: 10,
     borderWidth: 1,
     borderRadius: 8,
     borderColor: '#ccc',

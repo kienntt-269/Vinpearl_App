@@ -96,10 +96,8 @@ const HotelDetail = ({ route, navigation }) => {
                   paymentAmount: priceService * (numberAdult + numberChildren),
                 };
                 dispatch(addBookingHotel(dataBooking));
-                navigation.navigate('SummaryHotel', {
-                  data: dataBooking,
-                });
-              }}
+                navigation.navigate('SummaryHotel');
+            }}
           />
         </View>
       }

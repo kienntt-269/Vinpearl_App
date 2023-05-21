@@ -129,8 +129,8 @@ const Main = () => {
     return (
         <NavigationContainer>
           <Stack.Navigator
-            // initialRouteName="Login"
-            initialRouteName="Auth"
+            initialRouteName="Login"
+            // initialRouteName="Auth"
           >
             <Stack.Screen
               name='Login'

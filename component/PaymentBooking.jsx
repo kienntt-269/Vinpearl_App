@@ -14,20 +14,14 @@ const PaymentBooking = () => {
     const dispatch = useDispatch();
     const navigation = useNavigation();
     const bookingHotelDetail = useSelector(state => state.customerHotel.booking);
-    const bookingTourDetail = useSelector(state => state.customerTour.booking);
     const [url, setUrl] = useState(null);
     const [isPaymentSuccess, setIsPaymentSuccess] = useState(0);
     useEffect(() => {
         const addBookingRoom = async () => {
             try {
-                let res;
-                if (bookingHotelDetail) {
-                    res = await homeApi.addBookingRoom(bookingHotelDetail);
-                } else {
-                    res = await homeApi.addBookingTour(bookingTourDetail);
-                }
-                console.log(res.data.data.url);
-                setUrl(res.data.data.url);
+                const res = await homeApi.addBookingRoom(bookingHotelDetail);
+                setUrl(res?.data?.data?.url);
+                console.log(res?.data?.data?.url);
             } catch (err) {
                 console.log(err);
             }
@@ -45,11 +39,9 @@ const PaymentBooking = () => {
 
         if (bookingHotelDetail) {
             dispatch(removeBookingHotel(bookingHotelDetail));
-        } else {
-            dispatch(removeBookingHotel(bookingTourDetail));
         }
       };
-
+      console.log(url);
     return (
         <SafeAreaView style={{flex: 1, paddingHorizontal: 20, backgroundColor: '#FFF'}}>
             {

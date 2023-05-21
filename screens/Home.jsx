@@ -139,24 +139,28 @@ const Home = () => {
               </TouchableHighlight>
             </View>
           </View>
-          <View style={styles.suggest}>
-            <Text style={[DefaultStyle.text, styles.title]}>Gợi ý cho bạn</Text>
-            <FlatList
-                horizontal={true}
-                data={listOfSuggest}
-                renderItem={renderItemSuggest}
-                keyExtractor={(item) => item.id}
-            />
-          </View>
-          <View style={styles.suggest}>
-            <Text style={[DefaultStyle.text, styles.title]}>Đánh giá của khách hàng</Text>
-            <FlatList
-                horizontal={true}
-                data={listOfPost}
-                renderItem={renderItemPost}
-                keyExtractor={(item) => item.id}
-            />
-          </View>
+          {
+            listOfSuggest.length > 0 ? <View style={styles.suggest}>
+              <Text style={[DefaultStyle.text, styles.title]}>Gợi ý cho bạn</Text>
+              <FlatList
+                  horizontal={true}
+                  data={listOfSuggest}
+                  renderItem={renderItemSuggest}
+                  keyExtractor={(item) => item.id}
+              />
+            </View> : null
+          }
+          {
+            listOfPost.length > 0 ? <View style={styles.suggest}>
+              <Text style={[DefaultStyle.text, styles.title]}>Đánh giá của khách hàng</Text>
+              <FlatList
+                  horizontal={true}
+                  data={listOfPost}
+                  renderItem={renderItemPost}
+                  keyExtractor={(item) => item.id}
+              />
+            </View> : null
+          }
         </ScrollView>
       }
       

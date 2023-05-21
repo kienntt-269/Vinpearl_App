@@ -23,7 +23,7 @@ const OrderInforUser = ({ route, navigation }) => {
                 } else if (type == 'tour') {
                     const res = await homeApi.getDetailBookingTour(itemId)
                     setDetailData(res.data.data)
-                    setNumberDay(Math.round((new Date(res.data?.tour.startDate).getTime() - new Date(res.data?.paymentDate).getTime())/ 86400000))
+                    setNumberDay(Math.round((new Date(res.data?.tour?.startDate).getTime() - new Date(res.data?.paymentDate).getTime())/ 86400000))
                 }
             } catch (err) {
                 alert(err)
@@ -46,12 +46,12 @@ const OrderInforUser = ({ route, navigation }) => {
                     <Text style={styles.title}>Chi tiết đơn hàng</Text>
                     <View style={styles.itemWrapper}>
                         <View style={styles.groupItem}>
-                            <Text style={styles.label}>Mã đơn hàng:</Text>
-                            <Text style={styles.value}>{detailData.code}</Text>
+                            <Text style={[DefaultStyle.text, styles.label]}>Mã đơn hàng:</Text>
+                            <Text style={[DefaultStyle.text, styles.value]}>{detailData.code}</Text>
                         </View>
                         <View style={styles.groupItem}>
-                            <Text style={styles.label}>Trạng thái:</Text>
-                            <Text style={styles.value}>
+                            <Text style={[DefaultStyle.text, styles.label]}>Trạng thái:</Text>
+                            <Text style={[DefaultStyle.text, styles.value]}>
                                 {
                                     detailData.paymentStatus == 0 && <Text style={[DefaultStyle.text, styles.fail]}>Đã hủy</Text>
                                 }
@@ -67,8 +67,8 @@ const OrderInforUser = ({ route, navigation }) => {
                             </Text>
                         </View>
                         <View style={styles.groupItem}>
-                            <Text style={styles.label}>Tổng tiền thanh toán:</Text>
-                            <Text style={styles.value}>
+                            <Text style={[DefaultStyle.text, styles.label]}>Tổng tiền thanh toán:</Text>
+                            <Text style={[DefaultStyle.text, styles.value]}>
                                 <Price active={true} value={detailData?.paymentAmount || 0}/>
                             </Text>
                         </View>
@@ -78,20 +78,20 @@ const OrderInforUser = ({ route, navigation }) => {
                     <Text style={styles.title}>Thông tin người đặt</Text>
                     <View style={styles.itemWrapper}>
                         <View style={styles.groupItem}>
-                            <Text style={styles.label}>Tên khách hàng:</Text>
-                            <Text style={styles.value}>{detailData.customer?.fullName}</Text>
+                            <Text style={[DefaultStyle.text, styles.label]}>Tên khách hàng:</Text>
+                            <Text style={[DefaultStyle.text, styles.value]}>{detailData.customer?.fullName}</Text>
                         </View>
                         <View style={styles.groupItem}>
-                            <Text style={styles.label}>Email khách hàng:</Text>
-                            <Text style={styles.value}>{detailData.customer?.email}</Text>
+                            <Text style={[DefaultStyle.text, styles.label]}>Email khách hàng:</Text>
+                            <Text style={[DefaultStyle.text, styles.value]}>{detailData.customer?.email}</Text>
                         </View>
                         <View style={styles.groupItem}>
-                            <Text style={styles.label}>Số điện thoại:</Text>
-                            <Text style={styles.value}>{detailData.customer?.phone}</Text>
+                            <Text style={[DefaultStyle.text, styles.label]}>Số điện thoại:</Text>
+                            <Text style={[DefaultStyle.text, styles.value]}>{detailData.customer?.phone}</Text>
                         </View>
                         <View style={styles.groupItem}>
-                            <Text style={styles.label}>Thời gian giao dịch:</Text>
-                            <Text style={styles.value}>{utils.formattedDate(detailData.paymentDate)}</Text>
+                            <Text style={[DefaultStyle.text, styles.label]}>Thời gian giao dịch:</Text>
+                            <Text style={[DefaultStyle.text, styles.value]}>{utils.formattedDate(detailData.paymentDate)}</Text>
                         </View>
                     </View>
                 </View>
@@ -101,80 +101,69 @@ const OrderInforUser = ({ route, navigation }) => {
                         type == "hotel" ?
                         <View style={styles.detailOrder}>
                             <Image
-                                style={{borderRadius: 8, width: '100%', height: 120, position: 'absolute', left: 0, top: 0}}
+                                style={{borderRadius: 8, width: '100%', height: 120, marginBottom: 15}}
                                 source={{uri: detailData?.room?.roomTypes?.images[0]?.path?.replace("http://localhost:8080", domain)}}
                             />
-                            <View style={styles.nameDesc}>
-                                <Text>{detailData?.tour.name}</Text>
+                            <View style={styles.groupItem}>
+                                <Text style={[DefaultStyle.text, styles.label]}>Tên khách sạn: </Text>
+                                <Text style={[DefaultStyle.text, styles.value]}>{detailData?.hotel?.name}</Text>
                             </View>
-                            <View style={styles.content}>
-                                <Text style={[DefaultStyle.text, styles.titlePlace]}>Địa điểm áp dụng</Text>
-                                <Text style={[DefaultStyle.text, {color: "#2a398c"}]}>{detailData?.room?.roomTypes?.hotel?.name}</Text>
+                            <View style={styles.groupItem}>
+                                <Text style={[DefaultStyle.text, styles.label]}>Ngày đặt: </Text>
+                                <Text style={[DefaultStyle.text, styles.value]}>{detailData?.paymentDate}</Text>
                             </View>
-                            <Text style={[DefaultStyle.text, styles.dateValue]}>
-                                <Text>Giai đoạn áp dụng: </Text>
-                                <Text style={{fontWeight: 'bold'}}>{detailData?.tour.startDate}</Text>
-                            </Text>
-                            <Text style={[DefaultStyle.text, styles.dateValue]}>
-                                <Text>Ngày đặt trước: </Text>
-                                <Text style={{fontWeight: 'bold'}}>{numberDay}</Text>
-                            </Text>
-                            <Text style={[DefaultStyle.text, styles.dateValue]}>
-                                <Text>Hạn sử dụng: </Text>
-                                <Text style={{fontWeight: 'bold'}}>{detailData?.tour.expirationDate}</Text>
-                            </Text>
-                            <Text style={[DefaultStyle.text, styles.dateValue]}>
-                                <Text>Hạn sử dụng: </Text>
-                                <Text style={{fontWeight: 'bold'}}>{detailData?.tour.expirationDate}</Text>
-                            </Text>
-                            <Text style={[DefaultStyle.text, styles.dateValue]}>
-                                <Text>Số lượng: </Text>
-                                <Text style={{fontWeight: 'bold'}}>{detailData?.numberAdult + detailData?.numberChildren}</Text>
-                            </Text>
-                            <Text style={[DefaultStyle.text, styles.dateValue]}>
-                                <Text>Mã kiểm tra: </Text>
-                                <Text style={{fontWeight: 'bold'}}></Text>
-                            </Text>
+                            <View style={styles.groupItem}>
+                                <Text style={[DefaultStyle.text, styles.label]}>Ngày checkin: </Text>
+                                <Text style={[DefaultStyle.text, styles.value]}>{detailData?.checkIn}</Text>
+                            </View>
+                            <View style={styles.groupItem}>
+                                <Text style={[DefaultStyle.text, styles.label]}>Ngày checkout: </Text>
+                                <Text style={[DefaultStyle.text, styles.value]}>{detailData?.checkOut}</Text>
+                            </View>
+                            <View style={styles.groupItem}>
+                                <Text style={[DefaultStyle.text, styles.label]}>Số lượng: </Text>
+                                <Text style={[DefaultStyle.text, styles.value]}>{detailData?.numberAdult + detailData?.numberChildren}</Text>
+                            </View>
                         </View> : null
                     }
                     {
                         type == "tour" ?
                         <View style={styles.detailOrder}>
                             <Image
-                                style={{borderRadius: 8, width: '100%', height: 120, position: 'absolute', left: 0, top: 0}}
-                                source={{uri: detailData?.tour.images[0]?.path?.replace("http://localhost:8080", domain)}}
+                                style={{borderRadius: 8, width: '100%', height: 120, marginBottom: 15}}
+                                source={{uri: detailData?.tour?.images[0]?.path?.replace("http://localhost:8080", domain)}}
                             />
                             <View style={styles.nameDesc}>
-                                <Text>{detailData?.tour.name}</Text>
+                                <Text>{detailData?.tour?.name}</Text>
                             </View>
                             <View style={styles.content}>
-                                <Text style={[DefaultStyle.text, styles.titlePlace]}>Địa điểm áp dụng</Text>
-                                <Text style={[DefaultStyle.text, {color: "#2a398c"}]}>{detailData?.room?.roomTypes?.hotel?.name}</Text>
+                                <Text style={[DefaultStyle.text, styles.label]}>Địa điểm áp dụng</Text>
+                                <Text style={[DefaultStyle.text, styles.value]}>{detailData?.room?.roomTypes?.hotel?.name}</Text>
                             </View>
-                            <Text style={[DefaultStyle.text, styles.dateValue]}>
-                                <Text>Giai đoạn áp dụng: </Text>
-                                <Text style={{fontWeight: 'bold'}}>{detailData?.tour.startDate}</Text>
-                            </Text>
-                            <Text style={[DefaultStyle.text, styles.dateValue]}>
-                                <Text>Ngày đặt trước: </Text>
-                                <Text style={{fontWeight: 'bold'}}>{numberDay}</Text>
-                            </Text>
-                            <Text style={[DefaultStyle.text, styles.dateValue]}>
-                                <Text>Hạn sử dụng: </Text>
-                                <Text style={{fontWeight: 'bold'}}>{detailData?.tour.expirationDate}</Text>
-                            </Text>
-                            <Text style={[DefaultStyle.text, styles.dateValue]}>
-                                <Text>Hạn sử dụng: </Text>
-                                <Text style={{fontWeight: 'bold'}}>{detailData?.tour.expirationDate}</Text>
-                            </Text>
-                            <Text style={[DefaultStyle.text, styles.dateValue]}>
-                                <Text>Số lượng: </Text>
-                                <Text style={{fontWeight: 'bold'}}>{detailData?.numberAdult + detailData?.numberChildren}</Text>
-                            </Text>
-                            <Text style={[DefaultStyle.text, styles.dateValue]}>
-                                <Text>Mã kiểm tra: </Text>
-                                <Text style={{fontWeight: 'bold'}}></Text>
-                            </Text>
+                            <View style={styles.groupItem}>
+                                <Text style={[DefaultStyle.text, styles.label]}>Giai đoạn áp dụng: </Text>
+                                <Text style={[DefaultStyle.text, styles.value]}>{detailData?.tour?.startDate}</Text>
+                            </View>
+                            <View style={styles.groupItem}>
+                                <Text style={[DefaultStyle.text, styles.label]}>Ngày đặt trước: </Text>
+                                <Text style={[DefaultStyle.text, styles.value]}>{numberDay}</Text>
+                            </View>
+                            <View style={styles.groupItem}>
+                                <Text style={[DefaultStyle.text, styles.label]}>Hạn sử dụng: </Text>
+                                <Text style={[DefaultStyle.text, styles.value]}>{detailData?.tour?.expirationDate}</Text>
+                            </View>
+                            <View style={styles.groupItem}>
+                                <Text style={[DefaultStyle.text, styles.label]}>Hạn sử dụng: </Text>
+                                <Text style={[DefaultStyle.text, styles.value]}>{detailData?.tour?.expirationDate}</Text>
+                            </View>
+                            <View style={styles.groupItem}>
+                                <Text style={[DefaultStyle.text, styles.label]}>Số lượng: </Text>
+                                <Text style={[DefaultStyle.text, styles.value]}>{detailData?.numberAdult + detailData?.numberChildren}</Text>
+                            </View>
+                            <View style={styles.groupItem}>
+                                <Text style={[DefaultStyle.text, styles.label]}>Mã kiểm tra: </Text>
+                                <Text style={[DefaultStyle.text, styles.value]}></Text>
+                            </View>
                         </View> : null
                     }
                 </View>

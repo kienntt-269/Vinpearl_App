@@ -19,7 +19,6 @@ const FormBooking = ({ }) => {
   const navigation = useNavigation();
   const user = useSelector(selectUser)
   const [open, setOpen] = useState(false);
-  const [customerDetail, setCustomerDetail] = useState({});
   const [value, setValueDrop] = useState(null);
   const [valueFullName, setValueFullName] = useState("");
   const [valueEmail, setValueEmail] = useState("");
@@ -50,8 +49,6 @@ const FormBooking = ({ }) => {
     const getDetailCustomer = async () => {
       try {
         const res = await accountApi.detail(user.id);
-        console.log(res.data.data);
-        setCustomerDetail(res.data.data);
         setValue('fullName', res.data.data.fullName);
         setValue('phone', res.data.data.phone);
         setValue('email', res.data.data.email);
@@ -78,8 +75,9 @@ const FormBooking = ({ }) => {
         sex: indexGender,
       }
       const res = await accountApi.update(user.id, dataSet);
-      console.log(res.data.data);
-      navigation.navigate('PaymentBooking');
+      if (res.data.code == 200) {
+        navigation.navigate('PaymentBooking');
+      }
     } catch(err) {
       console.log(err)
     }
