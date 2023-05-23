@@ -74,7 +74,7 @@ const PersonalInfo = () => {
           control={control}
           render={({ field: { onChange, onBlur, value } }) => (
             <TextInput
-              style={{ height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 8 }}
+              style={{ height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 8, paddingLeft: 8 }}
               placeholder="Họ và tên"
               onBlur={onBlur}
               onChangeText={onChange}
@@ -105,7 +105,7 @@ const PersonalInfo = () => {
           control={control}
           render={({ field: { onChange, onBlur, value } }) => (
             <TextInput
-              style={{ height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 8 }}
+              style={{ height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 8, paddingLeft: 8 }}
               placeholder="Email"
               onBlur={onBlur}
               onChangeText={onChange}
@@ -124,7 +124,7 @@ const PersonalInfo = () => {
           control={control}
           render={({ field: { onChange, onBlur, value } }) => (
             <TextInput
-              style={{ height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 8 }}
+              style={{ height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 8, paddingLeft: 8 }}
               placeholder="Số điện thoại"
               onBlur={onBlur}
               onChangeText={onChange}
@@ -143,7 +143,7 @@ const PersonalInfo = () => {
           control={control}
           render={({ field: { onChange, onBlur, value } }) => (
             <TextInput
-              style={{ height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 8 }}
+              style={{ height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 8, paddingLeft: 8 }}
               placeholder="Căn cước công dân"
               onBlur={onBlur}
               onChangeText={onChange}

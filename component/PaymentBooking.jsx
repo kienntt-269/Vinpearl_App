@@ -9,11 +9,14 @@ import DefaultStyle from "../theme";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch } from "react-redux";
 import { removeBookingHotel } from "../redux/customerHotel/customerHotelSlice";
+import queryString from 'query-string';
+import { removeBookingTour } from "../redux/customerTour/customerTourSlice";
 
 const PaymentBooking = () => {
     const dispatch = useDispatch();
     const navigation = useNavigation();
     const bookingHotelDetail = useSelector(state => state.customerHotel.booking);
+    const bookingTourDetail = useSelector(state => state.customerTour.booking);
     const [url, setUrl] = useState(null);
     const [isPaymentSuccess, setIsPaymentSuccess] = useState(0);
     useEffect(() => {
@@ -21,27 +24,77 @@ const PaymentBooking = () => {
             try {
                 const res = await homeApi.addBookingRoom(bookingHotelDetail);
                 setUrl(res?.data?.data?.url);
-                console.log(res?.data?.data?.url);
             } catch (err) {
                 console.log(err);
             }
         };
-        addBookingRoom();
+        const addBookingTour = async () => {
+            try {
+                const res = await homeApi.addBookingTour(bookingTourDetail);
+                setUrl(res?.data?.data?.url);
+            } catch (err) {
+                console.log(err);
+            }
+        };
+        if (bookingHotelDetail) {
+            addBookingRoom();
+        } else if (bookingTourDetail) {
+            addBookingTour();
+        } else {
+            navigation.navigate("Trang chủ");
+        }
     }, []);
+
+    const checkBookingRoom = async (code) => {
+        try {
+            const res = await homeApi.getBookingRoomByPaymentCode(code);
+            console.log(res.data);
+            if (res.data.code === 200) {
+                const res1 = await homeApi.checkBookingRoomOK(code, res.data.data.id);
+                if (res1.data.code === 200) {
+                    console.log("booking ok!");
+                    setIsPaymentSuccess(2);
+                    dispatch(removeBookingHotel(bookingHotelDetail));
+                }
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
+    const checkBookingTour = async (code) => {
+        try {
+            const res = await homeApi.getBookingTourByPaymentCode(code);
+            console.log(res.data);
+            if (res.data.code === 200) {
+                const res1 = await homeApi.checkBookingTourOK(code, res.data.data.id);
+                if (res1.data.code === 200) {
+                    console.log("booking ok!");
+                    setIsPaymentSuccess(2);
+                    dispatch(removeBookingTour(bookingTourDetail));
+                }
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    };
 
     const handleNavigationStateChange = navState => {
         if (navState.url.includes('vnp_ResponseCode=00')) {
             // Xử lý dữ liệu thanh toán ở đây
-            setIsPaymentSuccess(1);
-        } else if (navState.url.includes('vnp_ResponseCode=24')) {
-            setIsPaymentSuccess(2);
-        }
+            if (url) {
+                const vnpTxnRef = queryString.parseUrl(url).query.vnp_TxnRef;
+                if (vnpTxnRef.includes('Hotel')) {
+                    checkBookingRoom(vnpTxnRef);
+                } else if (vnpTxnRef.includes('Tour')) {
+                    checkBookingTour(vnpTxnRef);
+                }
+            }
 
-        if (bookingHotelDetail) {
-            dispatch(removeBookingHotel(bookingHotelDetail));
+        } else if (navState.url.includes('vnp_ResponseCode=24')) {
+            setIsPaymentSuccess(3);
         }
       };
-      console.log(url);
     return (
         <SafeAreaView style={{flex: 1, paddingHorizontal: 20, backgroundColor: '#FFF'}}>
             {
@@ -51,7 +104,7 @@ const PaymentBooking = () => {
                 /> : null
             }
             {
-                isPaymentSuccess == 1 ? 
+                isPaymentSuccess == 2 ? 
                 <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
                     <FontAwesome5 name="check-circle" size={70} color="#2dce89" />
                     <Text style={[DefaultStyle.text, styles.status]}>Thanh toán thành công!</Text>
@@ -59,7 +112,7 @@ const PaymentBooking = () => {
                 </View> : null
             }
             {
-                isPaymentSuccess == 2 ? 
+                isPaymentSuccess == 3 ? 
                 <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
                     <AntDesign name="closecircle" size={80} color="#DE3645" />
                     <Text style={[DefaultStyle.text, styles.status]}> Thanh toán đã hủy!</Text>

@@ -23,7 +23,6 @@ const Home = () => {
     const getListOfSuggest = async () => {
       try {
           const res = await homeApi.getTourRecommendation(user.id);
-          console.log(res.data.data[0]);
           setListOfSuggest(res.data.data);
       } catch(err) {
           console.log(err)

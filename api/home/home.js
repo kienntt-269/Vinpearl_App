@@ -26,15 +26,17 @@ const homeApi = {
     // addBookingRoom: (data) => axiosClient.post(`payment`, data),
     addBookingRoom: (data) => axiosClient.post(`booking-room/booking`, data),
     addBookingTour: (data) => axiosClient.post(`booking-tour/booking`, data),
+    getBookingRoomByPaymentCode: (code) => axiosClient.get(`booking-room/findByPaymentCode/${code}`),
+    getBookingTourByPaymentCode: (code) => axiosClient.get(`booking-tour/findByPaymentCode/${code}`),
+    checkBookingRoomOK: (code, id) => axiosClient.put(`booking-room/check-payment-room-ok/${code}`, id),
+    checkBookingTourOK: (code, id) => axiosClient.put(`booking-tour/check-payment-tour-ok/${code}`, id),
 
     getBookingRoom: () => axiosClient.get(`booking-room/booking`),
     getBookingTour: () => axiosClient.get(`booking-tour/booking`),
-    checkBookingRoomOK: () => axiosClient.get(`booking-room/check-payment-room-ok`),
     searchBookingRoom: (params) => axiosClient.get(`booking-room/search`, {params: params}),
     searchBookingTour: (params) => axiosClient.get(`booking-tour/search`, {params: params}),
     getDetailBookingRoom: (id) => axiosClient.get(`booking-room/detail/${id}`),
     getDetailBookingTour: (id) => axiosClient.get(`booking-tour/detail/${id}`),
-    getBookingRoomByPaymentCode: () => axiosClient.get(`booking-room/findByPaymentCode`),
 }
 
 export default homeApi
