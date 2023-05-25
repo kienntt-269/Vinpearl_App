@@ -8,9 +8,8 @@ import homeApi from '../api/home/home';
 
 const PostDetail = ({route, value, icon, style, ...otherProps}) => {
   const { width } = useWindowDimensions();
-  const { itemId, name } = route.params;
+  const { itemId } = route.params;
   const [postDetail, setPostDetail] = useState()
-  console.log(name);
 
   useEffect(() => {
     const getPostDetail = async () => {

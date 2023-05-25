@@ -76,7 +76,6 @@ const Home = () => {
         style={styles.itemWrapper}
         onPress={() => navigation.navigate('PostDetail', {
             itemId: item.id,
-            // name: item.content,
         })}
     >
       <Image 

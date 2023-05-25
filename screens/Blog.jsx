@@ -1,53 +1,56 @@
-import { Image, StyleSheet, Text, TouchableOpacity, View, FlatList } from 'react-native'
+import { Image, StyleSheet, Text, TouchableOpacity, View, FlatList, Dimensions } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import homeApi from '../api/home/home'
 import { FontAwesome5 } from '@expo/vector-icons';
 import DefaultStyle from '../theme';
 import domain from '../api/domain';
+import { useNavigation } from '@react-navigation/native';
 
 const Blog = () => {
+  const navigation = useNavigation();
+  const { width } = Dimensions.get('window');
   const [page, setPage] = useState(0);
   const [listOfPost, setListOfPost] = useState([])
   useEffect(() => {
     const getListOfPost = async () => {
       try {
         const data = {
-          page: page,
-          size: 9,
+          page: 0,
+          size: 100,
           sort: 'id,desc'
         }
           const res = await homeApi.searchPost(data);
-          setListOfPost(...listOfPost, res.data.data.content);
+          // setListOfPost(...listOfPost, res.data.data.content);
+          setListOfPost(res.data.data.content);
       } catch(err) {
           console.log(err)
       }
     }
     getListOfPost() 
-  }, [page])
+  }, [])
 
   const renderItemPost = ({ item }) => (
     <TouchableOpacity
-        style={styles.itemWrapper}
-        onPress={() => navigation.navigate('PostDetail', {
-            itemId: item.id,
-            name: item.content,
-        })}
+      style={styles.itemWrapper}
+      onPress={() => navigation.navigate('PostDetail', {
+        itemId: item.id,
+      })}
     >
       <Image 
-          style={{width: '100%', height: 192, width: 162, borderRadius: 8}}
+          style={{width: '100%', height: 300, borderRadius: 8}}
           source={{uri: item.path?.replace("http://localhost:8080", domain)}}
       />
       <Text numberOfLines={2} style={[DefaultStyle.text, styles.namePost]}>
         {item.name}
       </Text>
-      <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
-        <View>
+      <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10,}}>
+        <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
           <FontAwesome5 name="heart" size={24} color="black" />
-          <Text style={[DefaultStyle.text, {marginLeft: 6}]}>{item.name}</Text>
+          <Text style={[DefaultStyle.text, {marginLeft: 6}]}>{item.countLike}</Text>
         </View>
-        <View>
+        <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
           <FontAwesome5 name="comment" size={24} color="black" />
-          <Text style={[DefaultStyle.text, {marginLeft: 6}]}>{item.name}</Text>
+          <Text style={[DefaultStyle.text, {marginLeft: 6}]}>{item.countComment}</Text>
         </View>
       </View>
     </TouchableOpacity>
@@ -55,7 +58,6 @@ const Blog = () => {
 
   return (
     <View>
-      <Text>Blog</Text>
       <FlatList
         data={listOfPost}
         renderItem={renderItemPost}
@@ -70,13 +72,14 @@ export default Blog
 
 const styles = StyleSheet.create({
   itemWrapper: {
-    width: 150,
-    paddingRight: 15,
+    width: '100%',
+    paddingHorizontal: 15,
     marginRight: 30,
 
   },
   namePost: {
     marginTop: 10,
-    fontWeight: '700'
+    fontWeight: '700',
+    width: '100%',
   },
 })

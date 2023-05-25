@@ -50,7 +50,7 @@ const Comment = ({ postId }) => {
   const { width } = useWindowDimensions();
 
   return (
-    <View style={styles.commentContainer}>
+    <View style={styles.commentWrapper}>
       <Text style={styles.commentTitle}>Bình luận</Text>
       <FlatList
         data={listOfData}
@@ -98,11 +98,19 @@ const Comment = ({ postId }) => {
 export default Comment
 
 const styles = StyleSheet.create({
-  commentContainer: {
+  commentWrapper: {
     marginTop: 20,
     marginBottom: 20,
     paddingLeft: 10,
     paddingRight: 10,
+    paddingTop: 20,
+    borderTopWidth: 2,
+    borderTopColor: '#CCCCCC',
+  },
+  commentContainer: {
+    marginTop: 10,
+    marginBottom: 10,
+
   },
 
   commentTitle: {
@@ -159,7 +167,7 @@ const styles = StyleSheet.create({
   commentInputText: {
     flex: 1,
     fontSize: 16,
-    maxHeight: 120,
+    minHeight: 120,
   },
   commentFormButton: {
     backgroundColor: '#0066cc',

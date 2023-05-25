@@ -113,7 +113,22 @@ const Auth = () => {
     <Tab.Screen
         name="Blog"
         component={Blog}
-        options={{headerShown: false}}
+        options={{
+          title: 'Danh sách bài viết', //Set Header Title
+          headerStyle: {
+            flex: 1,
+            justifyContent: 'center',
+            height: 100,
+            width: '100%',
+            flexDirection: 'row',
+            backgroundColor: "#FFF",
+          },
+          headerTintColor: '#2B2F34', //Set Header text color
+          headerTitleStyle: {
+            fontWeight: 'bold', //Set Header text style
+          },
+          headerTitleAlign: "center",
+        }}
     />
     <Tab.Screen
         name="Tài khoản"
