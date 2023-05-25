@@ -22,6 +22,7 @@ import accountApi from "../api/account";
 import { useForm, Controller } from "react-hook-form";
 import DefaultStyle from "../theme";
 import { AntDesign } from "@expo/vector-icons";
+import domain from "../api/domain";
 
 const SignIn = ({ navigation }) => {
   const {
@@ -68,7 +69,7 @@ const SignIn = ({ navigation }) => {
         <Image
           style={{ width: 70, height: 70 }}
           source={{
-            uri: "${domain}/images/home/logo/vinpearl-logo.svg",
+            uri: `${domain}/images/home/logo/vinpearl-logo.svg`,
           }}
         />
       </View>

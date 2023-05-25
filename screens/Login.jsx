@@ -21,6 +21,7 @@ import { useForm, Controller } from "react-hook-form";
 import utils from "../utils/utils";
 import { AntDesign } from "@expo/vector-icons";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import domain from "../api/domain";
 
 const Login = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -93,7 +94,7 @@ const Login = ({ navigation }) => {
         <Image
           style={{ width: 120, height: 120, resizeMode: "contain" }}
           source={{
-            uri: "${domain}/images/home/logo/vinpearl-logo.png",
+            uri: `${domain}/images/home/logo/vinpearl-logo.png`,
           }}
         />
       </View>
@@ -204,7 +205,7 @@ const Login = ({ navigation }) => {
               style={styles.closeButton}
               onPress={() => {
                 setValuePassword("");
-                setValue("email", "");
+                setValue("password", "");
               }}
             >
               <AntDesign name="close" size={24} color={COLORS.gray} />
