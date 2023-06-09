@@ -11,6 +11,7 @@ const Comment = ({ postId }) => {
   const user = useSelector(selectUser);
   const [listOfData, setListOfData] = useState([])
   const [comment, setComment] = useState([]);
+  const [reRenderComment, setReRenderComment] = useState(false);
 
   useEffect(() => {
     const getListOfComment = async () => {
@@ -26,8 +27,9 @@ const Comment = ({ postId }) => {
           console.log(err)
       }
     }
-    getListOfComment() 
-  }, [])
+    getListOfComment();
+    setReRenderComment(false);
+  }, [reRenderComment])
 
   const handleSubmit = async () => {
     const data = {
@@ -38,7 +40,8 @@ const Comment = ({ postId }) => {
       const res = await homeApi.addComment(postId, data);
 
       if (res.data.code === 200) {
-        
+        setReRenderComment(true);
+        setComment("");
       } else {
         alert("lỗi");
       }

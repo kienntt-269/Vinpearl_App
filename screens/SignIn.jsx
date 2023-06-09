@@ -28,13 +28,14 @@ const SignIn = ({ navigation }) => {
   const {
     control,
     handleSubmit,
-    getValues,
     setValue,
     formState: { errors },
+    trigger,
+    reset,
   } = useForm({});
-  const [valueFullName, setValueFullName] = useState("");
-  const [valueEmail, setValueEmail] = useState("");
-  const [valuePassword, setValuePassword] = useState("");
+  const [valueFullName, setValueFullName] = useState(undefined);
+  const [valueEmail, setValueEmail] = useState(undefined);
+  const [valuePassword, setValuePassword] = useState(undefined);
   const onSubmit = async (data) => {
     console.log(data);
     try {
@@ -59,6 +60,27 @@ const SignIn = ({ navigation }) => {
     Keyboard.dismiss();
   };
 
+  useEffect(() => {
+    if (valueFullName != undefined) {
+      trigger("email");
+    }
+    return () => {};
+  }, [valueFullName]);
+
+  useEffect(() => {
+    if (valueEmail != undefined) {
+      trigger("email");
+    }
+    return () => {};
+  }, [valueEmail]);
+
+  useEffect(() => {
+    if (valuePassword != undefined) {
+      trigger("password");
+    }
+    return () => {};
+  }, [valuePassword]);
+
   return (
     <TouchableOpacity
       style={styles.container}
@@ -69,7 +91,7 @@ const SignIn = ({ navigation }) => {
         <Image
           style={{ width: 70, height: 70 }}
           source={{
-            uri: `${domain}/images/home/logo/vinpearl-logo.svg`,
+            uri: `${domain}/images/home/logo/vinpearl-logo.png`,
           }}
         />
       </View>
@@ -106,7 +128,7 @@ const SignIn = ({ navigation }) => {
               </View>
             )}
           />
-          {valueFullName !== "" && (
+          {valueFullName && (
             <TouchableOpacity
               style={styles.closeButton}
               onPress={() => {
@@ -130,6 +152,7 @@ const SignIn = ({ navigation }) => {
           style={[
             styles.inputContainer,
             inputFocus && styles.inputFocus,
+            ,
             errors.email && styles.inputError,
           ]}
         >
@@ -160,7 +183,7 @@ const SignIn = ({ navigation }) => {
               </View>
             )}
           />
-          {valueEmail !== "" && (
+          {valueEmail && (
             <TouchableOpacity
               style={styles.closeButton}
               onPress={() => {
@@ -225,12 +248,12 @@ const SignIn = ({ navigation }) => {
               />
             )}
           />
-          {valuePassword !== "" && (
+          {valuePassword && (
             <TouchableOpacity
               style={styles.closeButton}
               onPress={() => {
                 setValuePassword("");
-                setValue("email", "");
+                setValue("password", "");
               }}
             >
               <AntDesign name="close" size={24} color={COLORS.gray} />
@@ -258,7 +281,13 @@ const SignIn = ({ navigation }) => {
       </View>
       <View style={styles.signupContainer}>
         <Text style={styles.signupText}>Bạn đã có tài khoản?</Text>
-        <TouchableOpacity onPress={() => navigation.navigate("Login")}>
+        <TouchableOpacity onPress={() => {
+            reset();
+            setValueEmail(undefined);
+            setValuePassword(undefined);
+            navigation.navigate("Login");
+          }
+        }>
           <Text style={styles.signupButton}>Đăng nhập</Text>
         </TouchableOpacity>
       </View>

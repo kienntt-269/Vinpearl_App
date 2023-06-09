@@ -31,6 +31,7 @@ const HotelDetail = ({ route, navigation }) => {
         const data = {
           page: 0,
           size: 10,
+          sort: 'id,asc',
           hotelId: hotelId,
           startTime: checkIn,
           endTime: checkOut,
@@ -194,7 +195,7 @@ const HotelDetail = ({ route, navigation }) => {
                           )) : null
                         }
                         <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
-                          <Price style={styles.price} active={true} checkHotel={true} value={itemService.price || 1000}/>
+                          <Price style={styles.price} active={true} checkHotel={true} value={itemService.price}/>
                           <Text style={[DefaultStyle.text, {fontSize: 12, fontWeight: '600', color: '#333878'}]}>Xem chi tiết</Text>
                         </View>
                       </TouchableOpacity>

@@ -1,7 +1,7 @@
-import { StyleSheet, View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, TextInput, TouchableOpacity, Keyboard, ScrollView } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
-import { FontAwesome } from '@expo/vector-icons';
+import { FontAwesome, MaterialIcons } from '@expo/vector-icons';
 import { useSelector } from 'react-redux';
 import { selectUser } from '../redux/user/userSlice';
 import accountApi from '../api/account';
@@ -11,10 +11,12 @@ import DefaultStyle from '../theme';
 const PersonalInfo = () => {
   const user = useSelector(selectUser);
   const [customerDetail, setCustomerDetail] = useState({});
+  const [selectGender, setSelectGender] = useState(false);
+  const [gender, setGender] = useState(0);
   const genderOptions = [
-    { label: 'Nam', value: '0' },
-    { label: 'Nữ', value: '1' },
-    { label: 'Khác', value: '2' },
+    { label: 'Nam', value: 0 },
+    { label: 'Nữ', value: 1 },
+    { label: 'Khác', value: 2 },
   ];
 
   useEffect(() => {
@@ -28,6 +30,7 @@ const PersonalInfo = () => {
           setValue('email', res.data.data.email);
           setValue('phone', res.data.data.phone);
           setValue('cccd', res.data.data.cccd);
+          setSelectGender(res.data.data.sex);
       } catch(err) {
           console.log(err)
       }
@@ -42,7 +45,8 @@ const PersonalInfo = () => {
     try {
       const params = {
         fullName: data.fullName,
-        sex: data.gender,
+        // sex: data.gender,
+        sex: selectGender == 1 ? 1 : 0,
         email: data.email,
         phone: data.phone,
         address: data.address,
@@ -65,104 +69,134 @@ const PersonalInfo = () => {
     }
   };
 
+  const hideKeyboard = () => {
+    Keyboard.dismiss();
+  };
+
   return (
-    <View style={{ padding: 16 }}>
-      <Text style={{ fontSize: 20, marginBottom: 16 }}>Thông tin cá nhân</Text>
-      <View style={styles.wrapper}>
-        <Text style={[DefaultStyle.text, styles.label]}>Họ và tên</Text>
-        <Controller
-          control={control}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <TextInput
-              style={{ height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 8, paddingLeft: 8 }}
-              placeholder="Họ và tên"
-              onBlur={onBlur}
-              onChangeText={onChange}
-              value={value}
-            />
-          )}
-          name="fullName"
-          rules={{ required: true }}
-          defaultValue=""
-        />
-      </View>
-
-      <View style={styles.wrapper}>
-        <Text style={[DefaultStyle.text, styles.label]}>Giới tính</Text>
-        <RadioForm
-          radio_props={genderOptions}
-          initial={0}
-          onPress={(value) => setValue('gender', value)}
-          buttonColor={'#2196f3'}
-          selectedButtonColor={'#2196f3'}
-          labelStyle={{ fontSize: 16, marginRight: 16 }}
-        />
-      </View>
-
-      <View style={styles.wrapper}>
-        <Text style={[DefaultStyle.text, styles.label]}>Email</Text>
-        <Controller
-          control={control}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <TextInput
-              style={{ height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 8, paddingLeft: 8 }}
-              placeholder="Email"
-              onBlur={onBlur}
-              onChangeText={onChange}
-              value={value}
-            />
-          )}
-          name="email"
-          rules={{ required: true, pattern: /^\S+@\S+$/i }}
-          defaultValue=""
-        />
-      </View>
-
-      <View style={styles.wrapper}>
-        <Text style={[DefaultStyle.text, styles.label]}>Số điện thoại</Text>
-        <Controller
-          control={control}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <TextInput
-              style={{ height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 8, paddingLeft: 8 }}
-              placeholder="Số điện thoại"
-              onBlur={onBlur}
-              onChangeText={onChange}
-              value={value}
-            />
-          )}
-          name="phone"
-          rules={{ required: true, pattern: /^[0-9]{10}$/ }}
-          defaultValue=""
-        />
-      </View>
-
-      <View style={styles.wrapper}>
-        <Text style={[DefaultStyle.text, styles.label]}>Căn cước công dân</Text>
-        <Controller
-          control={control}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <TextInput
-              style={{ height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 8, paddingLeft: 8 }}
-              placeholder="Căn cước công dân"
-              onBlur={onBlur}
-              onChangeText={onChange}
-              value={value}
-            />
-          )}
-          name="cccd"
-          rules={{ required: true, pattern: /^[0-9]{9}$/ }}
-          defaultValue=""
-        />
-      </View>
-
+    <ScrollView>
       <TouchableOpacity
-        style={{ backgroundColor: 'blue', padding: 16, borderRadius: 8, marginTop: 16 }}
-        onPress={handleSubmit(onSubmit)}
-      >
-        <Text style={{ color: 'white', textAlign: 'center', fontSize: 18 }}>Lưu thông tin</Text>
-      </TouchableOpacity>
-    </View>
+      style={styles.container}
+      activeOpacity={1}
+      onPress={hideKeyboard}
+    >
+      <View style={{ padding: 16 }}>
+        <Text style={[DefaultStyle.text, { fontSize: 20, marginBottom: 16 , fontWeight: '600'}]}>Thông tin liên hệ</Text>
+        <View style={styles.wrapper}>
+          <Text style={[DefaultStyle.text, styles.label]}>Họ và tên</Text>
+          <Controller
+            control={control}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <TextInput
+                style={{ height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 8, paddingLeft: 8 }}
+                placeholder="Họ và tên"
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+                editable={false}
+              />
+            )}
+            name="fullName"
+            rules={{ required: true }}
+            defaultValue=""
+          />
+        </View>
+
+        <View style={styles.wrapper}>
+          <Text style={[DefaultStyle.text, styles.label]}>Giới tính</Text>
+          <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start'}}>
+            {
+              genderOptions && genderOptions.map((item, index) => (
+                <TouchableOpacity
+                  onPress={() => setSelectGender(item.value)}
+                >
+                  {
+                    selectGender == item.value ? <MaterialIcons name="radio-button-on" size={24} color="#E8952F" /> : <MaterialIcons name="radio-button-on" size={24} color="#CCC" />
+                  }
+                  <Text style={[DefaultStyle.text, styles.nameGender]}>
+                    {item.label}
+                  </Text>
+                </TouchableOpacity>
+              )) 
+            }
+          </View>
+          {/* <RadioForm
+            radio_props={genderOptions}
+            initial={0}
+            onPress={(value) => setValue('gender', value)}
+            buttonColor={'#2196f3'}
+            selectedButtonColor={'#2196f3'}
+            labelStyle={{ fontSize: 16, marginRight: 16 }}
+          /> */}
+        </View>
+
+        <View style={styles.wrapper}>
+          <Text style={[DefaultStyle.text, styles.label]}>Email</Text>
+          <Controller
+            control={control}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <TextInput
+                style={{ height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 8, paddingLeft: 8 }}
+                placeholder="Email"
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+                editable={false}
+              />
+            )}
+            name="email"
+            rules={{ required: true, pattern: /^\S+@\S+$/i }}
+            defaultValue=""
+          />
+        </View>
+
+        <View style={styles.wrapper}>
+          <Text style={[DefaultStyle.text, styles.label]}>Số điện thoại</Text>
+          <Controller
+            control={control}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <TextInput
+                style={{ height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 8, paddingLeft: 8 }}
+                placeholder="Số điện thoại"
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+              />
+            )}
+            name="phone"
+            rules={{ required: true, pattern: /^[0-9]{10}$/ }}
+            defaultValue=""
+          />
+        </View>
+
+        <View style={styles.wrapper}>
+          <Text style={[DefaultStyle.text, styles.label]}>Căn cước công dân</Text>
+          <Controller
+            control={control}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <TextInput
+                style={{ height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 8, paddingLeft: 8 }}
+                placeholder="Căn cước công dân"
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+              />
+            )}
+            name="cccd"
+            rules={{ required: true, pattern: /^[0-9]{9}$/ }}
+            defaultValue=""
+          />
+        </View>
+
+        <TouchableOpacity
+          style={{ backgroundColor: '#E8952F', padding: 16, borderRadius: 8, marginTop: 16 }}
+          onPress={handleSubmit(onSubmit)}
+        >
+          <Text style={{ color: 'white', textAlign: 'center', fontSize: 18 }}>Lưu thông tin</Text>
+        </TouchableOpacity>
+      </View>
+    </TouchableOpacity>
+    </ScrollView>
   )
 }
 

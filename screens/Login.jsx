@@ -28,8 +28,8 @@ const Login = ({ navigation }) => {
   const [isLogin, setIsLogin] = useState(false);
   const [inputFocus, setInputFocus] = useState(false);
   const [inputPassFocus, setInputPassFocus] = useState(false);
-  const [valueEmail, setValueEmail] = useState();
-  const [valuePassword, setValuePassword] = useState("");
+  const [valueEmail, setValueEmail] = useState(undefined);
+  const [valuePassword, setValuePassword] = useState(undefined);
 
   const {
     control,
@@ -78,11 +78,17 @@ const Login = ({ navigation }) => {
 
   useEffect(() => {
     if (valueEmail != undefined) {
-      console.log(valueEmail);
       trigger("email");
     }
     return () => {};
   }, [valueEmail]);
+
+  useEffect(() => {
+    if (valuePassword != undefined) {
+      trigger("password");
+    }
+    return () => {};
+  }, [valuePassword]);
 
   return (
     <TouchableOpacity
@@ -200,7 +206,7 @@ const Login = ({ navigation }) => {
               />
             )}
           />
-          {valuePassword !== "" && (
+          {valuePassword && (
             <TouchableOpacity
               style={styles.closeButton}
               onPress={() => {
@@ -233,7 +239,12 @@ const Login = ({ navigation }) => {
       </View>
       <View style={styles.signupContainer}>
         <Text style={styles.signupText}>Bạn chưa có tài khoản?</Text>
-        <TouchableOpacity onPress={() => navigation.navigate("SignIn")}>
+        <TouchableOpacity onPress={() => {
+          reset();
+          setValueEmail(undefined);
+          setValuePassword(undefined);
+          navigation.navigate("SignIn");
+        }}>
           <Text style={styles.signupButton}>Đăng ký</Text>
         </TouchableOpacity>
       </View>
